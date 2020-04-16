@@ -25,4 +25,5 @@ public class res_users_dao extends database_helper {
             this.getWritableDatabase().close();
         }
     }
+
 }
