@@ -1,6 +1,7 @@
 package com.example.safe2load;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import database.helper.dao.res_users_dao;
+import database.helper.database_helper;
 import model.object.res_users_model;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private CardView btn_connect ;
     private Button btn ;
     private res_users_dao res_users_dao ;
-    private res_users_model res_users_model ;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -26,12 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        res_users_model = new res_users_model("test@moov.mg", "password", 1) ;
-        Log.d("user_model", String.valueOf(res_users_model.getName()));
 
-        this.res_users_dao = new res_users_dao(this);
-
-        res_users_dao.insert_user(res_users_model);
+        res_users_dao = new res_users_dao(this);
+        res_users_dao.insert_user(1 , "test");
 
         btn_connect = findViewById(R.id.bnt_connect);
         btn_connect.setOnClickListener(new btn_on_click_listner());

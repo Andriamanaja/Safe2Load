@@ -16,12 +16,12 @@ public class res_users_dao extends database_helper {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void insert_user(res_users_model user) {
-        String sql = "insert into res_users (active, login, password) values (?, ?, ?)";
+    public void insert_user(int produit_id, String produit_nom) {
+        //produit_id integer not null primary key autoincrement, produit_nom varchar(200)
+        String sql = "insert into produit (produit_id, produit_nom) values (?, ?)";
         try (SQLiteStatement statement = this.getWritableDatabase().compileStatement(sql)) {
-            statement.bindLong(1, user.getActive());
-            statement.bindString(2, user.getName());
-            statement.bindString(3, user.getPassword());
+            statement.bindLong(1, produit_id);
+            statement.bindString(2,produit_nom);
             statement.executeInsert();
             Log.d("database" , "vita n insert") ;
             this.getWritableDatabase().close();
