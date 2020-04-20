@@ -3,7 +3,7 @@ package database.helper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
 public class database_helper extends SQLiteOpenHelper {
 

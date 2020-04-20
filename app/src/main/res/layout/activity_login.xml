@@ -8,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="400dp"
+        tools:ignore="MissingConstraints">
 
         <RelativeLayout
             android:id="@+id/img_container"
@@ -26,7 +27,8 @@
                 android:layout_height="116dp"
                 android:layout_alignBottom="@id/field_container"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/ic_splash" />
+                app:srcCompat="@drawable/ic_splash"
+                tools:ignore="NotSibling" />
 
         </RelativeLayout>
 
@@ -92,13 +94,14 @@
                 android:textColor="@color/black_text" />
 
             <android.support.v7.widget.CardView
+                android:id="@+id/bnt_connect"
                 android:layout_width="150dp"
                 android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
                 app:cardCornerRadius="5dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginBottom="20dp"
-                android:background="#A0A3A7" >
+                android:background="@color/btn_primary" >
 
 
                 <RelativeLayout
@@ -124,7 +127,8 @@
                 android:background="#00FFFFFF"
                 android:layout_marginBottom="20dp"
                 android:layout_marginRight="10dp"
-                app:cardBackgroundColor="#00FFFFFF">
+                app:cardBackgroundColor="#00FFFFFF"
+                android:layout_alignParentRight="true">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
