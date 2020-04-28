@@ -4,15 +4,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
+public class FragmentViewPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
 
 
-    List<Fragment> list_fragment ;
-    List<String> list_title_fragment ;
+    List<Fragment> list_fragment = new ArrayList<>() ;
+    List<String> list_title_fragment = new ArrayList<>();
 
-    public FragmentPagerAdapter(FragmentManager fm) {
+    public FragmentViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

@@ -67,8 +67,6 @@ public class database_helper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("database","mandeha ve?") ;
-
         db.execSQL(ci_sessions) ;
         db.execSQL(user_groups) ;
         db.execSQL(user_login_sessions) ;
@@ -78,14 +76,10 @@ public class database_helper extends SQLiteOpenHelper {
         db.execSQL(categorie) ;
         db.execSQL(depot) ;
         db.execSQL(filiale) ;
-
         db.execSQL(inspectionstatut) ;
         db.execSQL(produit) ;
-
         db.execSQL(typeoperation) ;
-
         db.execSQL(vehiculetype) ;
-
         db.execSQL(inspectionvehicule) ;
         db.execSQL(pointcontrole) ;
         db.execSQL(questionnaire) ;

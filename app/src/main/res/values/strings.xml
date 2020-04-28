@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Safe2Load</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+
     <string name="title_activity_splashscreen">Safe2Load</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -9,5 +13,23 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_activity_menu2">Menu2Activity</string>
+    <string name="title_activity_menu2"></string>
+
+
+    <string name="critere_doc_portail_1">
+        Le camion dispose de tous les certificats d\'aptitude sur les contrôles de confirmité APAVA/MADAUTO en cours de validité (Code de la route, test de freinage, visite intérieur compartiement, test d\étanchéité)
+    </string>
+
+    <string name="critere_doc_portail_2">
+        Le transporteur dispose t-il le protocole de sécurité valide et signé par un responsable habilité de LPSA
+    </string>
+
+    <string name="critere_doc_portail_3">
+        Le conducteur est muni d\'un certificat d\'habilitation à conduire de PATH / LPSA (PASSEPORT DE CONDUITE)
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_test">testActivity</string>
 </resources>

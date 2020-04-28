@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         res_users_dao = new res_users_dao(this);
-        res_users_dao.insert_user(1 , "test");
+       // res_users_dao.insert_user(1 , "test");
 
         btn_connect = findViewById(R.id.bnt_connect);
         btn_connect.setOnClickListener(new btn_on_click_listner());

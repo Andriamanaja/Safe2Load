@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/dashboard" android:icon="@drawable/ic_dash" android:title="Tableau de bord"></item>
+    <item android:id="@+id/home" android:icon="@drawable/ic_home" android:title="Accueil"></item>
     <item android:id="@+id/operation" android:icon="@drawable/ic_operation" android:title="Opération"></item>
-    <item android:id="@+id/lst_controle" android:icon="@drawable/ic_exit" android:title="Liste de controle"></item>
+    <item android:id="@+id/stat_op_controle" android:icon="@drawable/ic_folder" android:title="Statistique des opérations"></item>
     <item android:id="@+id/synchro" android:icon="@drawable/ic_sync" android:title="Synchronisation"></item>
-    <item android:id="@+id/parameter" android:icon="@drawable/ic_setting" android:title="Parametre"></item>
-    <item android:id="@+id/database" android:icon="@drawable/ic_trash" android:title="Vider la base"></item>
+    <item android:id="@+id/parameter" android:icon="@drawable/ic_setting" android:title="Paramètre"></item>
+    <!--<item android:id="@+id/database" android:icon="@drawable/ic_trash" android:title="Vider la base"></item> -->
     <item android:id="@+id/discnonnect" android:icon="@drawable/ic_exit" android:title="Déconnexion"></item>
 </menu>

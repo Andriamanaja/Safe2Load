@@ -1,17 +1,17 @@
 package model.object;
 
-public class controle {
+public class controle_model {
     private int _id ;
     private String _descrption ;
     private boolean _is_true ;
 
-    public controle(int _id, String _descrption, boolean _is_true) {
+    public controle_model(int _id, String _descrption, boolean _is_true) {
         this._id = _id;
         this._descrption = _descrption;
         this._is_true = _is_true;
     }
 
-    public controle(String _descrption, boolean _is_true) {
+    public controle_model(String _descrption, boolean _is_true) {
         this._descrption = _descrption;
         this._is_true = _is_true;
     }
