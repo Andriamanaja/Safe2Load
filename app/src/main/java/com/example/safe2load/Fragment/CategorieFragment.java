@@ -4,12 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.util.JsonWriter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.safe2load.R;
+import com.example.safe2load.ViewPagerAdapter.ViewPagerAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -20,12 +25,12 @@ import model.object.controle_model;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CLCP_Fragment.OnFragmentInteractionListener} interface
+ * {@link CategorieFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CLCP_Fragment#newInstance} factory method to
+ * Use the {@link CategorieFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CLCP_Fragment extends Fragment {
+public class CategorieFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,13 +40,16 @@ public class CLCP_Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    View view ;
-
-    CategorieFragment categorieFragment ;
+    int selectedTabPosition;
 
     private OnFragmentInteractionListener mListener;
 
-    public CLCP_Fragment() {
+    ViewPager viewPager ;
+    TabLayout tabLayout ;
+    ViewPagerAdapter viewPagerAdapter ;
+    View view ;
+
+    public CategorieFragment() {
         // Required empty public constructor
     }
 
@@ -51,11 +59,11 @@ public class CLCP_Fragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CLCP_Fragment.
+     * @return A new instance of fragment CategorieFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CLCP_Fragment newInstance(String param1, String param2) {
-        CLCP_Fragment fragment = new CLCP_Fragment();
+    public static CategorieFragment newInstance(String param1, String param2) {
+        CategorieFragment fragment = new CategorieFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -76,35 +84,58 @@ public class CLCP_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_clcp_, container, false);
-
-        categorieFragment = (CategorieFragment)this.getChildFragmentManager().findFragmentById(R.id.fragmentParent) ;
-
-        List<controle_model> doc_portail_list_controle_model = new ArrayList<>() ;
-        List<controle_model> cams_list_controle_model = new ArrayList<>() ;
-        List<controle_model> cond_list_controle_model = new ArrayList<>() ;
-        Gson gson = new Gson() ;
-
-        doc_portail_list_controle_model.add(new controle_model(1 , "Le camion dispose de tous les certificats d\\'aptitude sur les contrôles de confirmité APAVA/MADAUTO en cours de validité (Code de la route, test de freinage, visite intérieur compartiement, test d\\étanchéité)", true)) ;
-        doc_portail_list_controle_model.add(new controle_model(2 , "Le transporteur dispose t-il le protocole de sécurité valide et signé par un responsable habilité de LPSA", true)) ;
-        doc_portail_list_controle_model.add(new controle_model(3 , "Le conducteur est muni d\\'un certificat d\\'habilitation à conduire de PATH / LPSA (PASSEPORT DE CONDUITE)", true)) ;
-
-        cams_list_controle_model.add(new controle_model(1 , "Le camion dispose de tous les certificats d\\'aptitude sur les contrôles de confirmité APAVA/MADAUTO en cours de validité (Code de la route, test de freinage, visite intérieur compartiement, test d\\étanchéité)", true)) ;
-        cams_list_controle_model.add(new controle_model(2 , "Le transporteur dispose t-il le protocole de sécurité valide et signé par un responsable habilité de LPSA", true)) ;
-
-        cond_list_controle_model.add(new controle_model(2 , "Le transporteur dispose t-il le protocole de sécurité valide et signé par un responsable habilité de LPSA", true)) ;
-
-        String json_doc_portail_list_controle_model = gson.toJson(doc_portail_list_controle_model) ;
-        String json_cams_list_controle_model = gson.toJson(cams_list_controle_model) ;
-        String json_cond_list_controle_model = gson.toJson(cond_list_controle_model) ;
-
-
-        //SOLOINA AMLE AVY ANATY BASE RF VITA N SYNCHRO
-        categorieFragment.add_categorie("Présentation des documents au portail", json_doc_portail_list_controle_model);
-        categorieFragment.add_categorie("Contrôle de conducteur", json_cams_list_controle_model);
-        categorieFragment.add_categorie("Contrôle de camion", json_cond_list_controle_model);
-
+        view = inflater.inflate(R.layout.fragment_categorie, container, false);
+        this.getIDs();
+        this.setEvents();
         return view ;
+    }
+
+    public void getIDs() {
+        this.tabLayout = view.findViewById(R.id.tab_layout) ;
+        this.viewPager = view.findViewById(R.id.view_pager) ;
+        viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getContext(), viewPager, tabLayout) ;
+        viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    public void setEvents () {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    public void add_categorie(String nom_categorie, String _list_controle_model) {
+
+        Log.d("categorie => ", _list_controle_model) ;
+
+        Bundle bundle = new Bundle() ;
+        bundle.putString("_list_inspection", _list_controle_model) ;
+
+        InspectionFragment inspectionFragment = new InspectionFragment() ;
+        inspectionFragment.setArguments(bundle);
+
+        viewPagerAdapter.addFrag(inspectionFragment, nom_categorie);
+        viewPagerAdapter.notifyDataSetChanged();
+        if(viewPagerAdapter.getCount() > 0) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
+        viewPager.setCurrentItem(0);
+        selectedTabPosition = viewPager.getCurrentItem() ;
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setCustomView(viewPagerAdapter.getTabView(i));
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

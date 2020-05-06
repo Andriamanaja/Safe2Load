@@ -3,6 +3,7 @@ package com.example.safe2load.RecyclerView;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        Log.d("after", "after") ;
         View view ;
         view = LayoutInflater.from(context).inflate(R.layout.item_stat, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view) ;
@@ -35,6 +37,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        Log.d("after", "after") ;
         viewHolder._tv_id_stat_op.setText(String.valueOf(list_stat_operation.get(i).get_id_stat_op()));
         viewHolder._tv_name_stat_op.setText(list_stat_operation.get(i).get_name_stat_op());
         viewHolder._tv_duree_stat_op.setText(list_stat_operation.get(i).get_duree_stat_op());

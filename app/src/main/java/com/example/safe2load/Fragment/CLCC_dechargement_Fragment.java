@@ -3,24 +3,19 @@ package com.example.safe2load.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.safe2load.R;
+import com.example.safe2load.ViewPagerAdapter.ViewPagerAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CLCC_dechargement_Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CLCC_dechargement_Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CLCC_dechargement_Fragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -30,19 +25,19 @@ public class CLCC_dechargement_Fragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ViewPagerAdapter adapter;
+
+    int selectedTabPosition ;
+
+
+
     public CLCC_dechargement_Fragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CLCC_dechargement_Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CLCC_dechargement_Fragment newInstance(String param1, String param2) {
         CLCC_dechargement_Fragment fragment = new CLCC_dechargement_Fragment();
         Bundle args = new Bundle();
@@ -62,10 +57,35 @@ public class CLCC_dechargement_Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_clcc_dechargement_, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_clcc_dechargement_, container, false);
+
+       /* viewPager = view.findViewById(R.id.clcc_dechargemment_view_pager) ;
+        tabLayout = view.findViewById(R.id.clcc_dechargemment_tab_layout) ;
+        adapter = new ViewPagerAdapter(getFragmentManager(), getActivity(), viewPager, tabLayout) ;
+        viewPager.setAdapter(adapter);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                selectedTabPosition = viewPager.getCurrentItem() ;
+                Log.d("Selected", "Selected " + tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });*/
+
+
+        return view ;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -74,6 +94,24 @@ public class CLCC_dechargement_Fragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+    public void addPage(String tittle) {
+        doc_portailFragment doc_portailFragment = new doc_portailFragment() ;
+        //doc_portailFragment.setArguments();
+        adapter.addFrag(doc_portailFragment, tittle);
+        adapter.notifyDataSetChanged();
+        setupTabLayout() ;
+        /*if(adapter.getCount()>0) tabLayout.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(adapter.getCount());*/
+    }
+
+    public void setupTabLayout() {
+        selectedTabPosition = viewPager.getCurrentItem();
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setCustomView(adapter.getTabView(i));
+        }
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -86,16 +124,6 @@ public class CLCC_dechargement_Fragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
