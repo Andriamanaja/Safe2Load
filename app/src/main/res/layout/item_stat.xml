@@ -138,6 +138,12 @@
             </LinearLayout>
         </LinearLayout>
 
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <ImageView
             android:id="@+id/img_look_stat_op"
             android:layout_width="25dp"
@@ -145,6 +151,12 @@
             android:layout_weight="0.1"
             android:layout_gravity="end"
             app:srcCompat="@drawable/ic_look" />
+
+        </RelativeLayout>
+
+
+
+
     </LinearLayout>
 
 

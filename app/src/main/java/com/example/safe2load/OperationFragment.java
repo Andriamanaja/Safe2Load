@@ -46,6 +46,7 @@ public class OperationFragment extends Fragment {
     CardView bnt_clcp ;
     CardView bnt_clwp ;
     CardView bnt_clcc_baremage ;
+    CardView btn_clwr;
     OvershootInterpolator interpolator = new OvershootInterpolator() ;
 
     Context operation_context ;
@@ -88,6 +89,8 @@ public class OperationFragment extends Fragment {
         bnt_clcp.setAlpha(0f);
         bnt_clwp.setAlpha(0f);
         bnt_clcc_baremage.setAlpha(0f);
+        btn_clwr.setAlpha(0f);
+
 
         bnt__clcc_dechargement.setTranslationX(translationY);
         bnt_clcc_chargement.setTranslationX(translationY);
@@ -98,18 +101,17 @@ public class OperationFragment extends Fragment {
         /*floatingActionButton.setOnClickListener(v -> {
             if(is_open == false) {
                 open_menu();
-            }
-            else {
+            } else {
                 close_menu();
             }
         });*/
 
         bnt__clcc_dechargement.setOnClickListener(v -> {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             try {
-                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_dechargement_Fragment.class.newInstance()).commit() ;
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_dechargement_Fragment.class.newInstance()).commit();
                 getActivity().setTitle("CLCC Déchargement");
-                add_to_activity("CLCC Déchargement") ;
+                add_to_activity("CLCC Déchargement");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
@@ -118,11 +120,11 @@ public class OperationFragment extends Fragment {
         });
 
         bnt_clcc_chargement.setOnClickListener(v -> {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             try {
-                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_chargement_Fragment.class.newInstance()).commit() ;
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_chargement_Fragment.class.newInstance()).commit();
                 getActivity().setTitle("CLCC Chargement");
-                add_to_activity("CLCC Chargement") ;
+                add_to_activity("CLCC Chargement");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
@@ -131,11 +133,11 @@ public class OperationFragment extends Fragment {
         });
 
         bnt_clcp.setOnClickListener(v -> {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             try {
-                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCP_Fragment.class.newInstance()).commit() ;
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCP_Fragment.class.newInstance()).commit();
                 getActivity().setTitle("CLCP");
-                add_to_activity("CLCP") ;
+                add_to_activity("CLCP");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
@@ -157,25 +159,47 @@ public class OperationFragment extends Fragment {
         });
 
         bnt_clcc_baremage.setOnClickListener(v -> {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             try {
                 fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_baremage_Fragment.class.newInstance()).commit() ;
                 getActivity().setTitle("CLCC Barénage");
                 add_to_activity("CLCC Barénage") ;
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_baremage_Fragment.class.newInstance()).commit();
+                getActivity().setTitle("CLCC Barémage");
+                add_to_activity("CLCC Barémage");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
                 e.printStackTrace();
             }
         });
+
+
+        btn_clwr.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+                try {
+                    fragmentManager.beginTransaction().replace(R.id.layout_content, CLWP_Fragment.class.newInstance()).commit() ;
+                    getActivity().setTitle("CLWR");
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (java.lang.InstantiationException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
 
     public void add_to_activity(String title) {
-        typeoeration_dao typeoeration_dao = new typeoeration_dao(this.view.getContext()) ;
-        typeoperation_model typeoperation_model = typeoeration_dao.getTypeOperationByName(title) ;
-        activity_dao activity_dao = new activity_dao(this.view.getContext()) ;
-        activity_model activity_model1 = new activity_model("typeoperation", typeoperation_model.get_typeoperation_id()) ;
-        if(activity_dao.verify_if_exists("typeoperation").equals(true)) {
+        typeoeration_dao typeoeration_dao = new typeoeration_dao(this.view.getContext());
+        typeoperation_model typeoperation_model = typeoeration_dao.getTypeOperationByName(title);
+        activity_dao activity_dao = new activity_dao(this.view.getContext());
+        activity_model activity_model1 = new activity_model("typeoperation", typeoperation_model.get_typeoperation_id());
+        if (activity_dao.verify_if_exists("typeoperation").equals(true)) {
             activity_dao.remove_activity("typeoperation");
         }
         activity_dao.create_activity(activity_model1);
@@ -192,6 +216,8 @@ public class OperationFragment extends Fragment {
         bnt_clcp.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clwp.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcc_baremage.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+        btn_clwr.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+
         is_open = true ;
     }
 
@@ -203,6 +229,8 @@ public class OperationFragment extends Fragment {
         bnt_clcp.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clwp.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcc_baremage.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+        btn_clwr.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+
 
         is_open = false ;
     }*/

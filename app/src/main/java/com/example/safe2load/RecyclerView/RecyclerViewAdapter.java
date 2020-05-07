@@ -5,8 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.SupportActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +36,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context ;
     List<stat_operation> list_stat_operation ;
 
+
     public RecyclerViewAdapter(Context context, List<stat_operation> list_stat_operation) {
         this.context = context;
         this.list_stat_operation = list_stat_operation;
+
+
+
     }
 
     @NonNull
@@ -40,11 +52,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         view = LayoutInflater.from(context).inflate(R.layout.item_stat, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view) ;
         return viewHolder ;
+
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         Log.d("after", "after") ;
         viewHolder._tv_id_stat_op.setText(String.valueOf(list_stat_operation.get(i).get_id_stat_op()));
         viewHolder._tv_name_stat_op.setText(list_stat_operation.get(i).get_name_stat_op());
@@ -72,13 +85,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }) ;
     }
 
+
     @Override
     public int getItemCount() {
         return list_stat_operation.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
+        View view;
         private TextView _tv_id_stat_op ;
         private TextView _tv_name_stat_op ;
         private TextView _tv_duree_stat_op ;
@@ -100,4 +114,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.item_stat = itemView.findViewById(R.id.item_stat) ;
         }
     }
+
 }

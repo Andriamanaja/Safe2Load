@@ -2,11 +2,10 @@ package com.example.safe2load;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
         }
         back_pressed = System.currentTimeMillis() ;
     }
+    private CardView btn_connect;
+    private Button btn;
+    private res_users_dao res_users_dao;
+    private CardView btn_mdpoubli;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -50,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
         field_login = findViewById(R.id.field_login) ;
         field_pswd = findViewById(R.id.field_pswd) ;
         btn_connect = findViewById(R.id.bnt_connect);
+        btn_mdpoubli = (CardView) findViewById(R.id.btn_mdpOubli);
+
+        btn_mdpoubli.setOnClickListener(new btn_mdpOubliListener());
+
         btn_connect.setOnClickListener(new btn_on_click_listner());
         mbdp = findViewById(R.id.mbdp) ;
         mbdp.setOnClickListener(v -> {
@@ -59,6 +66,26 @@ public class MainActivity extends AppCompatActivity {
         users_dao dao = new users_dao(this) ;
         dao.disconnectAll();
     }
+
+//    private View.OnClickListener btn_mdpOubliListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            Intent i = new Intent(MainActivity.this, Mot_de_passe_oubli.class) ;
+//            startActivity(i); ;
+//            finish();
+//        }
+//    };
+
+    public class btn_mdpOubliListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(MainActivity.this, MotDePasseOublieActivity.class);
+            startActivity(i);
+            ;
+            finish();
+        }
+    }
+
 
     public class btn_on_click_listner implements View.OnClickListener {
         @Override
@@ -104,6 +131,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+            Intent i = new Intent(MainActivity.this, Menu2Activity.class);
+            startActivity(i);
+            ;
+            finish();
         }
     }
+
+
 }

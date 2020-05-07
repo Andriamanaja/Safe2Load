@@ -37,4 +37,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="title_activity_test">testActivity</string>
+    <string name="critere_detail_stat">Présence de ceintures de sécurité à 03 points qui fonctionne bien pour le conducteur et son aide.</string>
+    <string name="comment_detail_stat">Présence de ceintures de sécurité à 03 points qui fonctionne bien pour le conducteur et abscence de ceintures de sécurité à 03 points qui fonctionne bien pour son aide</string>
 </resources>
