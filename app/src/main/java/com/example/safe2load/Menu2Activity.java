@@ -1,17 +1,10 @@
 package com.example.safe2load;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -20,32 +13,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.safe2load.Fragment.CLCC_dechargement_Fragment;
-
 public class Menu2Activity extends AppCompatActivity {
 
     DrawerLayout drawerLayout ;
     ActionBarDrawerToggle actionBarDrawerToggle ;
-    CLCC_dechargement_Fragment clcc_dechargement_fragment;
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu2);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        drawerLayout = findViewById(R.id.drawer);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close) ;
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view) ;
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupDrawerContext(navigationView);
-        /*clcc_dechargement_fragment = (CLCC_dechargement_Fragment) this.getSupportFragmentManager().findFragmentById(R.id.fragmnt_prnt) ;
-        clcc_dechargement_fragment.addPage("TEST");*/
-    }
-
-    public void fill_fragment () {
-
     }
 
     @Override
@@ -93,4 +77,11 @@ public class Menu2Activity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item) ;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("test_2" , "test_2") ;
+    }
+
 }

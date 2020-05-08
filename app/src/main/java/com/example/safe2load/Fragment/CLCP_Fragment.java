@@ -2,32 +2,31 @@ package com.example.safe2load.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.safe2load.R;
 import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.object.controle_model;
+import model.object.spinner_content_model;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CLCP_Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CLCP_Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class CLCP_Fragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class CLCP_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -36,7 +35,10 @@ public class CLCP_Fragment extends Fragment {
     private String mParam2;
 
     View view ;
-
+    Spinner spinner_transporteur_clcp ;
+    Spinner spinner_conducteur_clcp ;
+    Spinner spinner_tracteur_clcp ;
+    Spinner spinner_citerne_clcp ;
     CategorieFragment categorieFragment ;
 
     private OnFragmentInteractionListener mListener;
@@ -45,15 +47,6 @@ public class CLCP_Fragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CLCP_Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CLCP_Fragment newInstance(String param1, String param2) {
         CLCP_Fragment fragment = new CLCP_Fragment();
         Bundle args = new Bundle();
@@ -66,20 +59,127 @@ public class CLCP_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_clcp_, container, false);
+        this.loadViews();
+        this.fillDataToAllSpinner();
+        this.fillDataToCategorieFragment();
+        return view ;
+    }
 
+    public void loadViews () {
         categorieFragment = (CategorieFragment)this.getChildFragmentManager().findFragmentById(R.id.fragmentParent) ;
+        spinner_tracteur_clcp = view.findViewById(R.id.spinner_tracteur_clcp) ;
+        spinner_conducteur_clcp = view.findViewById(R.id.spinner_conducteur_clcp) ;
+        spinner_transporteur_clcp = view.findViewById(R.id.spinner_transporteur_clcp) ;
+        spinner_citerne_clcp = view.findViewById(R.id.spinner_citerne_clcp) ;
+    }
 
+    public void fillDataToAllSpinner () {
+        List<spinner_content_model> spinner_transporteur = new ArrayList<>() ;
+        List<spinner_content_model> spinner_conducteur = new ArrayList<>() ;
+        List<spinner_content_model> spinner_tracteur = new ArrayList<>() ;
+        List<spinner_content_model> spinner_citerne = new ArrayList<>() ;
+
+        spinner_transporteur.add(new spinner_content_model(1, "Rasoa")) ;
+        spinner_transporteur.add(new spinner_content_model(2, "Ravao")) ;
+        spinner_transporteur.add(new spinner_content_model(3, "Maria")) ;
+        spinner_transporteur.add(new spinner_content_model(4, "Berta")) ;
+        spinner_transporteur.add(new spinner_content_model(5, "Ravao")) ;
+        spinner_transporteur.add(new spinner_content_model(6, "Ramena")) ;
+
+        spinner_conducteur.add(new spinner_content_model(1, "Randria")) ;
+        spinner_conducteur.add(new spinner_content_model(1, "Raleva")) ;
+        spinner_conducteur.add(new spinner_content_model(2, "Rahosa")) ;
+        spinner_conducteur.add(new spinner_content_model(2, "Ndrema")) ;
+        spinner_conducteur.add(new spinner_content_model(3, "Razily")) ;
+        spinner_conducteur.add(new spinner_content_model(3, "Rakoto")) ;
+
+
+        spinner_tracteur.add(new spinner_content_model(1, "0248 TN")) ;
+        spinner_tracteur.add(new spinner_content_model(2, "1214 TG")) ;
+        spinner_tracteur.add(new spinner_content_model(3, "5588 TF")) ;
+        spinner_tracteur.add(new spinner_content_model(1, "0130 FE")) ;
+        spinner_tracteur.add(new spinner_content_model(2, "9910 TH")) ;
+        spinner_tracteur.add(new spinner_content_model(3, "1103 TA")) ;
+
+        spinner_citerne.add(new spinner_content_model(1, "788201")) ;
+        spinner_citerne.add(new spinner_content_model(1, "336870")) ;
+        spinner_citerne.add(new spinner_content_model(2, "011478")) ;
+        spinner_citerne.add(new spinner_content_model(2, "485484")) ;
+        spinner_citerne.add(new spinner_content_model(3, "025649")) ;
+        spinner_citerne.add(new spinner_content_model(3, "684984")) ;
+
+        ArrayAdapter<spinner_content_model> array_adapter_spinner_transporteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_transporteur) ;
+        array_adapter_spinner_transporteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_transporteur_clcp.setAdapter(array_adapter_spinner_transporteur);
+        spinner_transporteur_clcp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
+                Log.d("changed => ", String.valueOf(selected.get_description())) ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ArrayAdapter<spinner_content_model> array_adapter_spinner_conducteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_conducteur) ;
+        array_adapter_spinner_conducteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_conducteur_clcp.setAdapter(array_adapter_spinner_conducteur);
+        spinner_conducteur_clcp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
+                Log.d("changed => ", String.valueOf(selected.get_description())) ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ArrayAdapter<spinner_content_model> array_adapter_spinner_tracteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_tracteur) ;
+        array_adapter_spinner_tracteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_tracteur_clcp.setAdapter(array_adapter_spinner_tracteur);
+        spinner_tracteur_clcp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
+                Log.d("changed => ", String.valueOf(selected.get_description())) ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ArrayAdapter<spinner_content_model> array_adapter_spinner_citerne  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_citerne) ;
+        array_adapter_spinner_tracteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_citerne_clcp.setAdapter(array_adapter_spinner_tracteur);
+        spinner_citerne_clcp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
+                Log.d("changed => ", String.valueOf(selected.get_description())) ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public void fillDataToCategorieFragment() {
         List<controle_model> doc_portail_list_controle_model = new ArrayList<>() ;
         List<controle_model> cams_list_controle_model = new ArrayList<>() ;
         List<controle_model> cond_list_controle_model = new ArrayList<>() ;
@@ -95,16 +195,20 @@ public class CLCP_Fragment extends Fragment {
         cond_list_controle_model.add(new controle_model(2 , "Le transporteur dispose t-il le protocole de sécurité valide et signé par un responsable habilité de LPSA", true)) ;
 
         String json_doc_portail_list_controle_model = gson.toJson(doc_portail_list_controle_model) ;
-        String json_cams_list_controle_model = gson.toJson(cams_list_controle_model) ;
+        String   json_cams_list_controle_model = gson.toJson(cams_list_controle_model) ;
         String json_cond_list_controle_model = gson.toJson(cond_list_controle_model) ;
 
+        // SOLOINA AVY ANY ANATY BASE
 
-        //SOLOINA AMLE AVY ANATY BASE RF VITA N SYNCHRO
         categorieFragment.add_categorie("Présentation des documents au portail", json_doc_portail_list_controle_model);
         categorieFragment.add_categorie("Contrôle de conducteur", json_cams_list_controle_model);
         categorieFragment.add_categorie("Contrôle de camion", json_cond_list_controle_model);
+    }
 
-        return view ;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("test" , "test") ;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -125,16 +229,16 @@ public class CLCP_Fragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("selected => " , String.valueOf(spinner_tracteur_clcp.getSelectedItem())) ;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

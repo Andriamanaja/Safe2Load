@@ -136,6 +136,7 @@ public class CategorieFragment extends Fragment {
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setCustomView(viewPagerAdapter.getTabView(i));
         }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

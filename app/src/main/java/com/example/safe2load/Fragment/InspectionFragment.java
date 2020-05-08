@@ -1,6 +1,5 @@
 package com.example.safe2load.Fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,8 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.safe2load.R;
-import com.example.safe2load.RecyclerView.Doc_Portail_ViewAdapter;
-import com.example.safe2load.ViewPagerAdapter.ViewPagerAdapter;
+import com.example.safe2load.RecyclerView.InspectionRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +32,7 @@ public class InspectionFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private RecyclerView _recyclerView ;
-    List<controle_model> _list_controle_model = new ArrayList<>() ;
+    List<controle_model> _list_controle_model ;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -68,7 +66,7 @@ public class InspectionFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         Bundle bundle = getArguments() ;
-
+        _list_controle_model = new ArrayList<>() ;
         try {
             JSONArray jsonArray = new JSONArray(bundle.getString("_list_inspection")) ;
 
@@ -84,9 +82,9 @@ public class InspectionFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_inspection, container, false);
         _recyclerView = view.findViewById(R.id._inspection_recycler_view) ;
-        Doc_Portail_ViewAdapter doc_portail_viewAdapter = new Doc_Portail_ViewAdapter(this.getContext(), _list_controle_model) ;
+        InspectionRecyclerView inspectionRecyclerView = new InspectionRecyclerView(this.getContext(), _list_controle_model) ;
         _recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        _recyclerView.setAdapter(doc_portail_viewAdapter);
+        _recyclerView.setAdapter(inspectionRecyclerView);
         return view ;
     }
 

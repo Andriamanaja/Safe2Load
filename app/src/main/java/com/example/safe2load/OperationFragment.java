@@ -133,7 +133,7 @@ public class OperationFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
                 try {
                     fragmentManager.beginTransaction().replace(R.id.layout_content, CLCP_Fragment.class.newInstance()).commit() ;
-                    getActivity().setTitle("CLCC Déchargement");
+                    getActivity().setTitle("CLCP");
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (java.lang.InstantiationException e) {

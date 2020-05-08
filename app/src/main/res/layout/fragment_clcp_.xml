@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/fragment_clcc_chargement"
+    android:id="@+id/fragment_clcp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/info_bar"
+        android:id="@+id/info_bar_clcp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bliegray"
@@ -75,9 +75,10 @@
                     android:textSize="13dp"
                     android:text="Transporteur"/>
                 <Spinner
-                    android:id="@+id/spinner_transporteur_doc_portail"
+                    android:id="@+id/spinner_transporteur_clcp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></Spinner>
+                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -91,11 +92,14 @@
                     android:textStyle="bold"
                     android:textSize="13dp"
                     android:text="Nom du conducteur"/>
+
                 <Spinner
-                    android:id="@+id/spinner_conducteur_doc_portail"
+                    android:id="@+id/spinner_conducteur_clcp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></Spinner>
+                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -113,9 +117,9 @@
                     android:textSize="13dp"
                     android:text="Numero tracteur"/>
                 <Spinner
-                    android:id="@+id/spinner_tracteur_doc_portail"
+                    android:id="@+id/spinner_tracteur_clcp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></Spinner>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <LinearLayout
@@ -130,9 +134,9 @@
                     android:textSize="13dp"
                     android:text="Numero citerne"/>
                 <Spinner
-                    android:id="@+id/spinner_citerne_doc_portail"
+                    android:id="@+id/spinner_citerne_clcp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></Spinner>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
 
