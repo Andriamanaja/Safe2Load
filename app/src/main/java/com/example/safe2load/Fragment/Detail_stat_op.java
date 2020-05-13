@@ -31,7 +31,7 @@ public class Detail_stat_op extends Fragment {
     View view ;
 
 
-    private CLCC_chargement_Fragment.OnFragmentInteractionListener mListener;
+    private Detail_stat_op.OnFragmentInteractionListener mListener;
 
 
     // TODO: Rename and change types of parameters

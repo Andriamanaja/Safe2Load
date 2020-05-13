@@ -73,7 +73,6 @@
             android:layout_height="match_parent"
             android:layout_marginRight="15dp"
             android:layout_gravity="center_horizontal"
-            android:layout_weight=""
             app:srcCompat="@android:drawable/ic_menu_gallery" />
     </LinearLayout>
 

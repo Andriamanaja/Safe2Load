@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import database.helper.dao.res_users_dao;
 
@@ -65,7 +66,9 @@ public class MotDePasseOublieActivity extends AppCompatActivity {
 
                 showMessage("Error", "Please enter Email and The new password");
             }
-
+            else if (!mdp.matches(cmdp)) {
+                Toast.makeText(MotDePasseOublieActivity.this, "Password doesn't matched!", Toast.LENGTH_SHORT).show();
+            }
             else {
                 Intent i = new Intent(MotDePasseOublieActivity.this, MainActivity.class);
                 startActivity(i);
