@@ -3,9 +3,7 @@ package com.example.safe2load.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.safe2load.R;
-import com.example.safe2load.ViewPagerAdapter.ViewPagerAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -28,8 +25,9 @@ import model.object.categorie_questionnaire_model;
 import model.object.controle_model;
 import model.object.spinner_content_model;
 
-public class CLCC_dechargement_Fragment extends Fragment {
-
+public class CLWP_Fragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -38,25 +36,20 @@ public class CLCC_dechargement_Fragment extends Fragment {
     private String mParam2;
 
     View view ;
-    Spinner spinner_transporteur_clcc_dechargement ;
-    Spinner spinner_conducteur_clcc_dechargement ;
-    Spinner spinner_tracteur_clcc_dechargement ;
-    Spinner spinner_citerne_clcc_dechargement ;
+    Spinner spinner_transporteur_clwp ;
+    Spinner spinner_conducteur_clwp ;
+    Spinner spinner_tracteur_clwp ;
+    Spinner spinner_citerne_clwp ;
     CategorieFragment categorieFragment ;
 
     private OnFragmentInteractionListener mListener;
 
-
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private ViewPagerAdapter adapter;
-
-    public CLCC_dechargement_Fragment() {
+    public CLWP_Fragment() {
         // Required empty public constructor
     }
 
-    public static CLCC_dechargement_Fragment newInstance(String param1, String param2) {
-        CLCC_dechargement_Fragment fragment = new CLCC_dechargement_Fragment();
+    public static CLWP_Fragment newInstance(String param1, String param2) {
+        CLWP_Fragment fragment = new CLWP_Fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,11 +60,16 @@ public class CLCC_dechargement_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_clcc_dechargement_, container, false);
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_clwp_, container, false);
         this.loadViews();
         this.fillDataToAllSpinner();
         this.fillDataToCategorieFragment();
@@ -80,10 +78,10 @@ public class CLCC_dechargement_Fragment extends Fragment {
 
     public void loadViews () {
         categorieFragment = (CategorieFragment)this.getChildFragmentManager().findFragmentById(R.id.fragmentParent) ;
-        spinner_tracteur_clcc_dechargement = view.findViewById(R.id.spinner_tracteur_clcc_dechargement) ;
-        spinner_conducteur_clcc_dechargement = view.findViewById(R.id.spinner_conducteur_clcc_dechargement) ;
-        spinner_transporteur_clcc_dechargement = view.findViewById(R.id.spinner_transporteur_clcc_dechargement) ;
-        spinner_citerne_clcc_dechargement = view.findViewById(R.id.spinner_citerne_clcc_dechargement) ;
+        spinner_tracteur_clwp = view.findViewById(R.id.spinner_tracteur_clwp) ;
+        spinner_conducteur_clwp = view.findViewById(R.id.spinner_conducteur_clwp) ;
+        spinner_transporteur_clwp = view.findViewById(R.id.spinner_transporteur_clwp) ;
+        spinner_citerne_clwp = view.findViewById(R.id.spinner_citerne_clwp) ;
     }
 
     public void fillDataToAllSpinner () {
@@ -123,8 +121,8 @@ public class CLCC_dechargement_Fragment extends Fragment {
 
         ArrayAdapter<spinner_content_model> array_adapter_spinner_transporteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_transporteur) ;
         array_adapter_spinner_transporteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_transporteur_clcc_dechargement.setAdapter(array_adapter_spinner_transporteur);
-        spinner_transporteur_clcc_dechargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_transporteur_clwp.setAdapter(array_adapter_spinner_transporteur);
+        spinner_transporteur_clwp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
@@ -139,8 +137,8 @@ public class CLCC_dechargement_Fragment extends Fragment {
 
         ArrayAdapter<spinner_content_model> array_adapter_spinner_conducteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_conducteur) ;
         array_adapter_spinner_conducteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_conducteur_clcc_dechargement.setAdapter(array_adapter_spinner_conducteur);
-        spinner_conducteur_clcc_dechargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_conducteur_clwp.setAdapter(array_adapter_spinner_conducteur);
+        spinner_conducteur_clwp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
@@ -155,8 +153,8 @@ public class CLCC_dechargement_Fragment extends Fragment {
 
         ArrayAdapter<spinner_content_model> array_adapter_spinner_tracteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_tracteur) ;
         array_adapter_spinner_tracteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_tracteur_clcc_dechargement.setAdapter(array_adapter_spinner_tracteur);
-        spinner_tracteur_clcc_dechargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_tracteur_clwp.setAdapter(array_adapter_spinner_tracteur);
+        spinner_tracteur_clwp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
@@ -171,8 +169,8 @@ public class CLCC_dechargement_Fragment extends Fragment {
 
         ArrayAdapter<spinner_content_model> array_adapter_spinner_citerne  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_citerne) ;
         array_adapter_spinner_tracteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_citerne_clcc_dechargement.setAdapter(array_adapter_spinner_tracteur);
-        spinner_citerne_clcc_dechargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_citerne_clwp.setAdapter(array_adapter_spinner_tracteur);
+        spinner_citerne_clwp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
@@ -203,15 +201,12 @@ public class CLCC_dechargement_Fragment extends Fragment {
         }
     }
 
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    public void addPage(String tittle) {
-
     }
 
     @Override

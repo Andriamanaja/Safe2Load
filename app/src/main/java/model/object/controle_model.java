@@ -24,8 +24,7 @@ public class controle_model {
 
     public controle_model(JSONObject object) throws JSONException {
         this._id = object.getInt("_id") ;
-        this._descrption = object.getString("_descrption") ;
-        this._is_true = object.getBoolean("_is_true") ;
+        this._descrption = object.getString("_description") ;
     }
 
     public controle_model(int _id, String _descrption, boolean _is_true) {

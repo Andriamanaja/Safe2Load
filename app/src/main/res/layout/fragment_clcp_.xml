@@ -77,7 +77,8 @@
                 <Spinner
                     android:id="@+id/spinner_transporteur_clcp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
             </LinearLayout>
 
@@ -96,7 +97,8 @@
                 <Spinner
                     android:id="@+id/spinner_conducteur_clcp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
             </LinearLayout>
 
@@ -119,7 +121,8 @@
                 <Spinner
                     android:id="@+id/spinner_tracteur_clcp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
             </LinearLayout>
 
             <LinearLayout
@@ -136,7 +139,8 @@
                 <Spinner
                     android:id="@+id/spinner_citerne_clcp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
             </LinearLayout>
         </LinearLayout>
 

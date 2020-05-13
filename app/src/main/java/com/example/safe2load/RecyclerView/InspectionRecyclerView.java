@@ -26,6 +26,8 @@ import com.example.safe2load.R;
 
 import java.util.List;
 
+import database.helper.dao.activity_dao;
+import model.object.activity_model;
 import model.object.controle_model;
 
 public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyclerView.ViewHolder> implements ActivityCompat.OnRequestPermissionsResultCallback {
@@ -68,40 +70,43 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
         viewHolder._id_doc_potrail.setText(String.valueOf(list_controle_model.get(i).get_id()));
         viewHolder._desc_doc_portail.setText(list_controle_model.get(i).get_descrption());
         viewHolder._is_actif_doc_portail.setChecked(list_controle_model.get(i).is_is_true());
-        viewHolder._btn_edit_doc_portail.setOnClickListener(new View.OnClickListener() {
-
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-                if(v.GONE == viewHolder._commentaire_container.getVisibility()) {
+        viewHolder._btn_edit_doc_portail.setOnClickListener(v -> {
+            if(v.GONE == viewHolder._commentaire_container.getVisibility()) {
 //                    TransitionManager.beginDelayedTransition(viewHolder.itm_cnt, new AutoTransition());
-                    viewHolder._commentaire_container.setVisibility(v.VISIBLE);
-                }
-                else {
-  //                  TransitionManager.beginDelayedTransition(viewHolder.itm_cnt, new AutoTransition());
-                    viewHolder._commentaire_container.setVisibility(v.GONE);
-                }
+                viewHolder._commentaire_container.setVisibility(v.VISIBLE);
+            }
+            else {
+//                  TransitionManager.beginDelayedTransition(viewHolder.itm_cnt, new AutoTransition());
+                viewHolder._commentaire_container.setVisibility(v.GONE);
             }
         });
-        viewHolder._image_doc_portail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        viewHolder._image_doc_portail.setOnClickListener(v -> {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if( context.checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED||context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                            String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE} ;
-                            ActivityCompat.requestPermissions(((Activity)context),permissions, 1000) ;
-                        }
-                        else{
-                            open_camera();
-                        }
+                    if( context.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED||context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE} ;
+                        ActivityCompat.requestPermissions(((Activity)context),permissions, 1000) ;
                     }
-                    else {
+                    else{
                         open_camera();
                     }
                 }
+                else {
+                    open_camera();
+                }
+                setActualActivity(i) ;
             }
         });
+    }
+
+    public void setActualActivity(int index) {
+        activity_dao activity_dao = new activity_dao(view.getContext()) ;
+        activity_model activity_model = new activity_model("questionnaire", list_controle_model.get(index).get_id()) ;
+        if(activity_dao.verify_if_exists("questionnaire").equals(true)) {
+            activity_dao.remove_activity("questionnaire");
+        }
+        activity_dao.create_activity(activity_model);
     }
 
     public void open_camera() {

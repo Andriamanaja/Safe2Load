@@ -76,7 +76,8 @@
                 <Spinner
                     android:id="@+id/spinner_transporteur_clcc_baremage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
             </LinearLayout>
 
@@ -95,7 +96,8 @@
                 <Spinner
                     android:id="@+id/spinner_conducteur_clcc_baremage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
             </LinearLayout>
 
@@ -118,7 +120,8 @@
                 <Spinner
                     android:id="@+id/spinner_tracteur_clcc_baremage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
             </LinearLayout>
 
             <LinearLayout
@@ -135,7 +138,8 @@
                 <Spinner
                     android:id="@+id/spinner_citerne_clcc_baremage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
             </LinearLayout>
         </LinearLayout>
 

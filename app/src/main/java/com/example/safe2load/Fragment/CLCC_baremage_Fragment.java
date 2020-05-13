@@ -18,6 +18,10 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.helper.dao.activity_dao;
+import database.helper.dao.questionnaire_dao;
+import model.object.activity_model;
+import model.object.categorie_questionnaire_model;
 import model.object.controle_model;
 import model.object.spinner_content_model;
 
@@ -177,30 +181,20 @@ public class CLCC_baremage_Fragment extends Fragment {
     }
 
     public void fillDataToCategorieFragment() {
-        List<controle_model> doc_portail_list_controle_model = new ArrayList<>() ;
-        List<controle_model> cams_list_controle_model = new ArrayList<>() ;
-        List<controle_model> cond_list_controle_model = new ArrayList<>() ;
-        Gson gson = new Gson() ;
-
-        doc_portail_list_controle_model.add(new controle_model(1 , "Le camion dispose de tous les certificats d\\'aptitude sur les contrôles de confirmité APAVA/MADAUTO en cours de validité (Code de la route, test de freinage, visite intérieur compartiement, test d\\étanchéité)", true)) ;
-        doc_portail_list_controle_model.add(new controle_model(2 , "Le transporteur dispose t-il le protocole de sécurité valide et signé par un responsable habilité de LPSA", true)) ;
-        doc_portail_list_controle_model.add(new controle_model(3 , "Le conducteur est muni d\\'un certificat d\\'habilitation à conduire de PATH / LPSA (PASSEPORT DE CONDUITE)", true)) ;
-
-        cams_list_controle_model.add(new controle_model(1 , "Le camion dispose de tous les certificats d\\'aptitude sur les contrôles de confirmité APAVA/MADAUTO en cours de validité (Code de la route, test de freinage, visite intérieur compartiement, test d\\étanchéité)", true)) ;
-        cams_list_controle_model.add(new controle_model(2 , "Le transporteur dispose t-il le protocole de sécurité valide et signé par un responsable habilité de LPSA", true)) ;
-
-        cond_list_controle_model.add(new controle_model(2 , "Le transporteur dispose t-il le protocole de sécurité valide et signé par un responsable habilité de LPSA", true)) ;
-
-        String json_doc_portail_list_controle_model = gson.toJson(doc_portail_list_controle_model) ;
-        String   json_cams_list_controle_model = gson.toJson(cams_list_controle_model) ;
-        String json_cond_list_controle_model = gson.toJson(cond_list_controle_model) ;
-
-        // SOLOINA AVY ANY ANATY BASE
-
-        categorieFragment.add_categorie("Présentation des documents au portail", json_doc_portail_list_controle_model);
-        categorieFragment.add_categorie("Contrôle de conducteur", json_cams_list_controle_model);
-        categorieFragment.add_categorie("Contrôle de camion", json_cond_list_controle_model);
-    }
+        activity_dao activity_dao = new activity_dao(view.getContext()) ;
+        activity_model activity_model = activity_dao.getActivityByTableName("typeoperation") ;
+        questionnaire_dao questionnaire_dao = new questionnaire_dao(view.getContext()) ;
+        List<categorie_questionnaire_model> list = questionnaire_dao.getCategorieQuestionnaireBycatId(activity_model.get_table_id()) ;
+        if(list.size() > 0) {
+            activity_model activity_model1 = new activity_model("categorie", list.get(0).getCategorie_id()) ;
+            if(activity_dao.verify_if_exists("categorie").equals(true)) {
+                activity_dao.remove_activity("categorie");
+            }
+            activity_dao.create_activity(activity_model1);
+            for(int i = 0 ; i < list.size() ; i++) {
+                categorieFragment.add_categorie(list.get(i).getCategorie_nom(), list.get(i).getQuestionnaire());
+            }
+        }}
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

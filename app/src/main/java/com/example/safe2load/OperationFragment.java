@@ -20,6 +20,11 @@ import com.example.safe2load.Fragment.CLCC_chargement_Fragment;
 import com.example.safe2load.Fragment.CLCC_dechargement_Fragment;
 import com.example.safe2load.Fragment.CLCP_Fragment;
 
+import database.helper.dao.activity_dao;
+import database.helper.dao.typeoeration_dao;
+import model.object.activity_model;
+import model.object.typeoperation_model;
+
 
 public class OperationFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -85,77 +90,77 @@ public class OperationFragment extends Fragment {
         bnt_clcp.setTranslationX(translationY);
         bnt_clcc_baremage.setTranslationX(translationY);
 
-        floatingActionButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(is_open == false) {
-                    open_menu();
-                }
-                else {
-                    close_menu();
-                }
+        floatingActionButton.setOnClickListener(v -> {
+            if(is_open == false) {
+                open_menu();
+            }
+            else {
+                close_menu();
             }
         });
 
-        bnt__clcc_dechargement.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
-                try {
-                    fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_dechargement_Fragment.class.newInstance()).commit() ;
-                    getActivity().setTitle("CLCC_déchargement");
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (java.lang.InstantiationException e) {
-                    e.printStackTrace();
-                }
+        bnt__clcc_dechargement.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            try {
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_dechargement_Fragment.class.newInstance()).commit() ;
+                getActivity().setTitle("CLCC Déchargement");
+                add_to_activity("CLCC Déchargement") ;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
             }
         });
 
-        bnt_clcc_chargement.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
-                try {
-                    fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_chargement_Fragment.class.newInstance()).commit() ;
-                    getActivity().setTitle("CLCC chargement");
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (java.lang.InstantiationException e) {
-                    e.printStackTrace();
-                }
+        bnt_clcc_chargement.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            try {
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_chargement_Fragment.class.newInstance()).commit() ;
+                getActivity().setTitle("CLCC Chargement");
+                add_to_activity("CLCC Chargement") ;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
             }
         });
 
-        bnt_clcp.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
-                try {
-                    fragmentManager.beginTransaction().replace(R.id.layout_content, CLCP_Fragment.class.newInstance()).commit() ;
-                    getActivity().setTitle("CLCP");
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (java.lang.InstantiationException e) {
-                    e.printStackTrace();
-                }
+        bnt_clcp.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            try {
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCP_Fragment.class.newInstance()).commit() ;
+                getActivity().setTitle("CLCP");
+                add_to_activity("CLCP") ;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
             }
         });
 
-        bnt_clcc_baremage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
-                try {
-                    fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_baremage_Fragment.class.newInstance()).commit() ;
-                    getActivity().setTitle("CLCC_baremage");
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (java.lang.InstantiationException e) {
-                    e.printStackTrace();
-                }
+        bnt_clcc_baremage.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            try {
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_baremage_Fragment.class.newInstance()).commit() ;
+                getActivity().setTitle("CLCC Barémage");
+                add_to_activity("CLCC Barémage") ;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
             }
         });
+    }
+
+    public void add_to_activity(String title) {
+        typeoeration_dao typeoeration_dao = new typeoeration_dao(this.view.getContext()) ;
+        typeoperation_model typeoperation_model = typeoeration_dao.getTypeOperationByName(title) ;
+        activity_dao activity_dao = new activity_dao(this.view.getContext()) ;
+        activity_model activity_model1 = new activity_model("typeoperation", typeoperation_model.get_typeoperation_id()) ;
+        if(activity_dao.verify_if_exists("typeoperation").equals(true)) {
+            activity_dao.remove_activity("typeoperation");
+        }
+        activity_dao.create_activity(activity_model1);
     }
 
     @SuppressLint("ResourceAsColor")

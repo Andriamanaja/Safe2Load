@@ -20,6 +20,10 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.helper.dao.activity_dao;
+import database.helper.dao.categorie_dao;
+import model.object.activity_model;
+import model.object.categorie_model;
 import model.object.controle_model;
 
 /**
@@ -101,7 +105,11 @@ public class CategorieFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                activity_dao activity_dao = new activity_dao(view.getContext()) ;
+                categorie_dao categorie_dao = new categorie_dao(view.getContext()) ;
+                categorie_model categorie_model = categorie_dao.getCategorieByTableName( tab.getText().toString()) ;
+                activity_model activity_model = new activity_model("categorie", categorie_model.get_categorie_id()) ;
+                activity_dao.update_activity(activity_model, activity_dao.getActivityByTableName("categorie").get_table_id());
             }
 
             @Override
@@ -117,8 +125,6 @@ public class CategorieFragment extends Fragment {
     }
 
     public void add_categorie(String nom_categorie, String _list_controle_model) {
-
-        Log.d("categorie => ", _list_controle_model) ;
 
         Bundle bundle = new Bundle() ;
         bundle.putString("_list_inspection", _list_controle_model) ;
