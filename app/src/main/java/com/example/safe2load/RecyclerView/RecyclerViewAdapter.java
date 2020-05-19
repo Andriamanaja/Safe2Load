@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
+
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.safe2load.DetailActivity;
 import com.example.safe2load.R;
+import com.example.safe2load.detail_stat;
 
 import java.util.List;
 
@@ -31,9 +33,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     List<stat_operation> list_stat_operation ;
 
 
+
+
     public RecyclerViewAdapter(Context context, List<stat_operation> list_stat_operation) {
         this.context = context;
         this.list_stat_operation = list_stat_operation;
+
+
 
 
 
@@ -86,7 +92,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        View view;
+
         private TextView _tv_id_stat_op ;
         private TextView _tv_name_stat_op ;
         private TextView _tv_duree_stat_op ;

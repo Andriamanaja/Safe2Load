@@ -44,6 +44,12 @@ public class database_helper extends SQLiteOpenHelper {
     private static final String drop_users = "drop table if exists users" ;
     private static final String drop_groups = "drop table if exists groups" ;
     private static final String drop_data_for_sync = "drop table if exists data_for_sync" ;
+
+    private static final String drop_detail_stat = "drop table if exists detail_stat";/*detail_stat*/
+    private static final String drop_motdepasseO = "drop table if exixts motdepasseO";/*mot de passe oublie*/
+
+
+
     public database_helper(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
     }

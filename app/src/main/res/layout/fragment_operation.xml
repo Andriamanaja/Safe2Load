@@ -175,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="CLWR"
+                        android:text="CLWP"
                         android:textColor="#66FF33"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -214,15 +214,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="end"
-            android:layout_marginRight="30dp">
+            android:layout_marginRight="30dp"/>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/floating_btn_operation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/colorPrimaryDark"
-                app:srcCompat="@drawable/ic_add_black_24dp" />
-        </RelativeLayout>
 
     </LinearLayout>
 

@@ -20,6 +20,8 @@ import com.example.safe2load.Fragment.CLCC_chargement_Fragment;
 import com.example.safe2load.Fragment.CLCC_dechargement_Fragment;
 import com.example.safe2load.Fragment.CLCP_Fragment;
 import com.example.safe2load.Fragment.CLWP_Fragment;
+import com.example.safe2load.Fragment.CLWR_Fragment;
+import com.example.safe2load.Fragment.CLWP_Fragment;
 
 import database.helper.dao.activity_dao;
 import database.helper.dao.typeoeration_dao;
@@ -40,14 +42,16 @@ public class OperationFragment extends Fragment {
     View view ;
     ConstraintLayout content_operation ;
 
-    FloatingActionButton floatingActionButton ;
+//    FloatingActionButton floatingActionButton ;
     CardView bnt_clcc_chargement ;
     CardView bnt__clcc_dechargement ;
     CardView bnt_clcp ;
     CardView bnt_clwp ;
     CardView bnt_clcc_baremage ;
-    CardView btn_clwr;
-    OvershootInterpolator interpolator = new OvershootInterpolator() ;
+    CardView btn_clwp;
+//    OvershootInterpolator interpolator = new OvershootInterpolator() ;
+
+
 
     Context operation_context ;
 
@@ -175,21 +179,22 @@ public class OperationFragment extends Fragment {
         });
 
 
-        btn_clwr.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn_clwp.setOnClickListener(v ->  {
 
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
-                try {
-                    fragmentManager.beginTransaction().replace(R.id.layout_content, CLWP_Fragment.class.newInstance()).commit() ;
-                    getActivity().setTitle("CLWR");
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (java.lang.InstantiationException e) {
-                    e.printStackTrace();
-                }
 
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            try {
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLWP_Fragment.class.newInstance()).commit() ;
+                getActivity().setTitle("CLWP");
+                add_to_activity("CLWP");
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
             }
+
+
+
         });
 
     }

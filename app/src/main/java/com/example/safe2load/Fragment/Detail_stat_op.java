@@ -31,7 +31,7 @@ public class Detail_stat_op extends Fragment {
     View view ;
 
 
-    private Detail_stat_op.OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
 
 
     // TODO: Rename and change types of parameters
@@ -85,10 +85,11 @@ public class Detail_stat_op extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+            this.init_detail_statFragment();
         view = inflater.inflate(R.layout.fragment_detail_stat_op, container, false);
         init_detail_statFragment();
         return view;
+
     }
 
     public void onButtonPressed(Uri uri) {

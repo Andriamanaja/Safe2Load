@@ -129,6 +129,7 @@ public class CLCC_chargement_Fragment extends Fragment  {
     }
 
     public void loadViews () {
+        categorieFragment = (CategorieFragment)this.getChildFragmentManager().findFragmentById(R.id.fragmentParent) ;
         spinner_tracteur_clcc_chargement = view.findViewById(R.id.spinner_tracteur_clcc_chargement) ;
         spinner_conducteur_clcc_chargement = view.findViewById(R.id.spinner_conducteur_clcc_chargement) ;
         spinner_transporteur_clcc_chargement = view.findViewById(R.id.spinner_transporteur_clcc_chargement) ;

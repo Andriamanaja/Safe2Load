@@ -1,8 +1,12 @@
 package com.example.safe2load;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +22,7 @@ public class MotDePasseOublieActivity extends AppCompatActivity {
     private EditText emailEditText, mdpEditText, cmdpEditText;
     private database.helper.dao.res_users_dao res_users_dao;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,17 @@ public class MotDePasseOublieActivity extends AppCompatActivity {
             email = emailEditText.getText().toString();
             mdp = mdpEditText.getText().toString();
             cmdp = cmdpEditText.getText().toString();
+
+//            Boolean res=res_users_dao.checkUsers(email,mdp);
+//            if(res == true){
+//                Toast.makeText(MotDePasseOublieActivity.this,"Succesfully loggedin",Toast.LENGTH_SHORT).show();
+//
+//                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+//            }else{
+//                Toast.makeText(MotDePasseOublieActivity.this,"Login Error",Toast.LENGTH_SHORT).show();
+//            }
+
+
 //            Toast.makeText(getApplicationContext(), mdp, Toast.LENGTH_SHORT).show();
 
 
@@ -64,7 +79,7 @@ public class MotDePasseOublieActivity extends AppCompatActivity {
                     cmdpEditText.getText().toString().trim().length() == 0) {
 
 
-                showMessage("Error", "Please enter Email and The new password");
+                showMessage("Error", "Please enter Email/The new password");
             }
             else if (!mdp.matches(cmdp)) {
                 Toast.makeText(MotDePasseOublieActivity.this, "Password doesn't matched!", Toast.LENGTH_SHORT).show();
@@ -75,10 +90,41 @@ public class MotDePasseOublieActivity extends AppCompatActivity {
                 ;
                 finish();
 
+                logInWith(email,mdp);
 
             }
         }
     }
+
+
+    private void logInWith(String email, String mdp) {
+
+        final ProgressDialog progressDialog = ProgressDialog
+                .show(MotDePasseOublieActivity.this,
+                        "Log In is processing...",
+                        "");
+
+//        res_users_dao.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+////            @Override
+////            public void onComplete(@NonNull Task<AuthResult> task) {
+////                if(task.isSuccessful()){
+////                    Intent intent = new Intent(MotDePasseOublieActivity.this, MainActivity.class);
+////                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+////                    startActivity(intent);
+////                    finish();
+////                    Toast.makeText(MotDePasseOublieActivity.this, "Log In Successful", Toast.LENGTH_SHORT).show();
+////                    progressDialog.dismiss();
+////
+////                }else{
+////                    progressDialog.dismiss();
+////                    Toast.makeText(MotDePasseOublieActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+////                }
+////            }
+////        });
+
+    }
+
+
 
     public void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

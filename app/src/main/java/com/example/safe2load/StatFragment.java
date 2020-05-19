@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.safe2load.RecyclerView.RecyclerViewAdapter;
-import com.example.safe2load.utils.ItemClickSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ public class StatFragment extends Fragment {
     View view ;
     private RecyclerView _recyclerView ;
     private List<stat_operation> _list_stat_operation ;
-    private RecyclerViewAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,31 +76,13 @@ public class StatFragment extends Fragment {
         _recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         _recyclerView.setAdapter(recyclerViewAdapter);
         return view ;
-
-//        this.configureRecyclerView();
-//        this.configureSwipeRefreshLayout();
-        // 2 - Calling the method that configuring click on RecyclerView
     }
-
-    private void configureOnClickRecyclerView() {
-
-        ItemClickSupport.addTo(_recyclerView, R.layout.fragment_stat)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.e("TAG", "Position : "+position);
-                    }
-                });
-    }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-
-
     }
 
     @Override

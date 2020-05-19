@@ -72,6 +72,7 @@ public class Detail_statFragment extends Fragment {
         _list_detail_stat.add(new Detail_stat_model(11, "Pneumatiques en bon état y compris les roues de secours (profondeur rainure > 2 mm sur toute la circonférence) et en nombre suffisant(01RDS pour le tracteur et 01RDS pour la citerne)", "Pneumatiques en bon état y compris les roues de secours (profondeur rainure > 2 mm ur toute la circonférence)mais en nombre insuffisant (01RDS pour le tracteur et 0 pour la citerne) " )) ;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
