@@ -2,9 +2,11 @@ package com.example.safe2load.Fragment;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,25 +14,57 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.safe2load.R;
 import com.example.safe2load.RecyclerView.FragmentViewPagerAdapter;
+import com.example.safe2load.RecyclerView.InspectionRecyclerView;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import database.helper.dao.activity_dao;
 import database.helper.dao.categorie_dao;
+import database.helper.dao.data_for_sync_dao;
+import database.helper.dao.depot_dao;
+import database.helper.dao.inspection_dao;
+import database.helper.dao.plannification_dao;
+import database.helper.dao.pointcontrole_dao;
 import database.helper.dao.questionnaire_dao;
+import database.helper.dao.users_dao;
+import database.helper.dao.vehicule_dao;
+import database.helper.dao.vehiculeinspection_dao;
 import model.object.activity_model;
 import model.object.categorie_model;
 import model.object.categorie_questionnaire_model;
 import model.object.controle_model;
+import model.object.data_for_sync_model;
+import model.object.depot_model;
+import model.object.inspection_model;
+import model.object.inspectionvehicule_model;
+import model.object.plannification_model;
+import model.object.pointcontrole_model;
+import model.object.questionnaire_model;
 import model.object.spinner_content_model;
+import model.object.transporteur_model;
+import model.object.users_model;
+import model.object.vehicule_model;
+
+import static database.helper.dao.vehicule_dao.*;
 
 public class CLCC_chargement_Fragment extends Fragment {
+
+    private List<plannification_model> list_plannification = new ArrayList<>() ;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -48,7 +82,14 @@ public class CLCC_chargement_Fragment extends Fragment {
     Spinner spinner_conducteur_clcc_chargement ;
     Spinner spinner_tracteur_clcc_chargement ;
     Spinner spinner_citerne_clcc_chargement ;
+    TextView date_chargement ;
+    TextView heure_chargement ;
+    TextView depot_chargement ;
+    TextView durée_chargement ;
+    Button save_inspection ;
     CategorieFragment categorieFragment ;
+    int current_inspection_id = 0 ;
+    InspectionRecyclerView adpter ;
 
     private OnFragmentInteractionListener mListener;
 
@@ -72,96 +113,175 @@ public class CLCC_chargement_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         view = inflater.inflate(R.layout.fragment_clcc_chargement_, container, false);
         this.loadViews();
-        this.fillDataToAllSpinner();
-        this.fillDataToCategorieFragment();
+
+        try {
+            this.fillDataToAllSpinner();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            fillDataToCategorieFragment();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return view ;
     }
 
     public void loadViews () {
-        categorieFragment = (CategorieFragment)this.getChildFragmentManager().findFragmentById(R.id.fragmentParent) ;
         spinner_tracteur_clcc_chargement = view.findViewById(R.id.spinner_tracteur_clcc_chargement) ;
         spinner_conducteur_clcc_chargement = view.findViewById(R.id.spinner_conducteur_clcc_chargement) ;
         spinner_transporteur_clcc_chargement = view.findViewById(R.id.spinner_transporteur_clcc_chargement) ;
         spinner_citerne_clcc_chargement = view.findViewById(R.id.spinner_citerne_clcc_chargement) ;
+        save_inspection = view.findViewById(R.id.save_inspection) ;
+        date_chargement = view.findViewById(R.id.date_chargement) ;
+        heure_chargement = view.findViewById(R.id.heure_chargement) ;
+        depot_chargement = view.findViewById(R.id.depot_chargement) ;
     }
 
-    public void fillDataToAllSpinner () {
-        List<spinner_content_model> spinner_transporteur = new ArrayList<>() ;
-        List<spinner_content_model> spinner_conducteur = new ArrayList<>() ;
-        List<spinner_content_model> spinner_tracteur = new ArrayList<>() ;
-        List<spinner_content_model> spinner_citerne = new ArrayList<>() ;
+    public void fillDataToAllSpinner () throws ParseException {
 
-        spinner_transporteur.add(new spinner_content_model(1, "Rasoa")) ;
-        spinner_transporteur.add(new spinner_content_model(2, "Ravao")) ;
-        spinner_transporteur.add(new spinner_content_model(3, "Maria")) ;
-        spinner_transporteur.add(new spinner_content_model(4, "Berta")) ;
-        spinner_transporteur.add(new spinner_content_model(5, "Ravao")) ;
-        spinner_transporteur.add(new spinner_content_model(6, "Ramena")) ;
+        users_dao users_dao = new users_dao(view.getContext()) ;
 
-        spinner_conducteur.add(new spinner_content_model(1, "Randria")) ;
-        spinner_conducteur.add(new spinner_content_model(1, "Raleva")) ;
-        spinner_conducteur.add(new spinner_content_model(2, "Rahosa")) ;
-        spinner_conducteur.add(new spinner_content_model(2, "Ndrema")) ;
-        spinner_conducteur.add(new spinner_content_model(3, "Razily")) ;
-        spinner_conducteur.add(new spinner_content_model(3, "Rakoto")) ;
+        plannification_dao plannification_dao = new plannification_dao(this.getContext()) ;
+        this.list_plannification = plannification_dao.getPlannification() ;
+        List<vehicule_model> list_vehicule = new ArrayList<>() ;
+        for(int i = 0 ; i < this.list_plannification.size() ; i++) {
+            list_vehicule.add(list_plannification.get(i).getCiterne(list_plannification.get(i))) ;
+        }
 
+        ArrayAdapter<vehicule_model> array_adapter_spinner_vehicule = new ArrayAdapter<vehicule_model>(this.view.getContext(), android.R.layout.simple_spinner_item, list_vehicule) ;
+        array_adapter_spinner_vehicule.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
-        spinner_tracteur.add(new spinner_content_model(1, "0248 TN")) ;
-        spinner_tracteur.add(new spinner_content_model(2, "1214 TG")) ;
-        spinner_tracteur.add(new spinner_content_model(3, "5588 TF")) ;
-        spinner_tracteur.add(new spinner_content_model(1, "0130 FE")) ;
-        spinner_tracteur.add(new spinner_content_model(2, "9910 TH")) ;
-        spinner_tracteur.add(new spinner_content_model(3, "1103 TA")) ;
+        //TRACTEUR
+        spinner_tracteur_clcc_chargement.setAdapter(array_adapter_spinner_vehicule);
 
-        spinner_citerne.add(new spinner_content_model(1, "788201")) ;
-        spinner_citerne.add(new spinner_content_model(1, "336870")) ;
-        spinner_citerne.add(new spinner_content_model(2, "011478")) ;
-        spinner_citerne.add(new spinner_content_model(2, "485484")) ;
-        spinner_citerne.add(new spinner_content_model(3, "025649")) ;
-        spinner_citerne.add(new spinner_content_model(3, "684984")) ;
-
-        ArrayAdapter<spinner_content_model> array_adapter_spinner_transporteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_transporteur) ;
-        array_adapter_spinner_transporteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_transporteur_clcc_chargement.setAdapter(array_adapter_spinner_transporteur);
-        spinner_transporteur_clcc_chargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
-                Log.d("changed => ", String.valueOf(selected.get_description())) ;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        ArrayAdapter<spinner_content_model> array_adapter_spinner_conducteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_conducteur) ;
-        array_adapter_spinner_conducteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_conducteur_clcc_chargement.setAdapter(array_adapter_spinner_conducteur);
-        spinner_conducteur_clcc_chargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
-                Log.d("changed => ", String.valueOf(selected.get_description())) ;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        ArrayAdapter<spinner_content_model> array_adapter_spinner_tracteur  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_tracteur) ;
-        array_adapter_spinner_tracteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_tracteur_clcc_chargement.setAdapter(array_adapter_spinner_tracteur);
         spinner_tracteur_clcc_chargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
-                Log.d("changed => ", String.valueOf(selected.get_description())) ;
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+
+
+                depot_dao depot_dao = new depot_dao(view.getContext()) ;
+                depot_model depot_model = depot_dao.getDepotById(list_plannification.get(position).get_depot_id()) ;
+                depot_chargement.setText(depot_model.getDepot_nom());
+
+                Log.d("depot => ", depot_model.getDepot_nom()) ;
+
+                pointcontrole_dao pointcontrole_dao = new pointcontrole_dao(view.getContext()) ;
+                plannification_model my_plannification = list_plannification.get(position) ;
+                vehicule_model my_vehicule = list_vehicule.get(position) ;
+                vehiculeinspection_dao vehiculeinspection_dao = new vehiculeinspection_dao(view.getContext()) ;
+                boolean verification = false ;
+                if(list_vehicule.get(position).get_vehiculetype_id() == 1) {
+                    verification =  vehiculeinspection_dao.verify_inspection_id(list_vehicule.get(position).get_vehicule_id()) ;
+                }
+                else {
+                    verification =  vehiculeinspection_dao.verify_inspection_vehicule_id(list_vehicule.get(position).get_vehicule_id()) ;
+                }
+                if(verification == false) {
+                    try {
+                        inspection_dao inspection_dao = new inspection_dao(view.getContext()) ;
+                        current_inspection_id = inspection_dao.getNewIdfromInspection() ;
+                        activity_model activity_model = new activity_model("inspection", current_inspection_id) ;
+                        activity_dao activity_dao = new activity_dao(view.getContext()) ;
+                        if(activity_dao.verify_if_exists("inspection").equals(true)) {
+                            activity_dao.remove_activity("inspection");
+                        }
+                        activity_dao.create_activity(activity_model);
+                        vehicule_dao vehicule_dao = new vehicule_dao(view.getContext()) ;
+                        int idtransporteur = vehicule_dao.getTransporteur(my_vehicule.get_vehicule_id()).getId() ;
+                       // data_for_sync_model dt = vehiculeinspection_dao.insertInspectionVehicule(new inspectionvehicule_model(my_vehicule.get_vehicule_id(), current_inspection_id));
+                       // data_for_sync_dao data_for_sync_dao = new data_for_sync_dao(view.getContext()) ;
+                       // data_for_sync_dao.insertDataForSync(dt);
+                        inspection_model inspection_model = new inspection_model(
+                                users_dao.getConnectedUser().getId(),
+                                0,
+                                idtransporteur,
+                                2,
+                                my_plannification.get_type_operation() ,
+                                my_plannification.get_depot_id(),
+                                inspection_dao.getNewIdfromInspection(),
+                                my_vehicule.get_vehicule_id(),
+                                my_vehicule.get_citerne_id(),
+                                list_plannification.get(position).get_plannification_id()
+                        ) ;
+                        data_for_sync_dao data_for_sync_dao = new data_for_sync_dao(view.getContext()) ;
+                        data_for_sync_model dt = inspection_dao.insertInspection(inspection_model);
+                        data_for_sync_dao.insertDataForSync(dt);
+                        questionnaire_dao questionnaire_dao = new questionnaire_dao(view.getContext()) ;
+                        List<Integer> list_questionnaire_id = questionnaire_dao.getQuestionnaireIdByActivity() ;
+                        for(int i = 0 ; i < list_questionnaire_id.size() ; i++) {
+                            pointcontrole_model pointcontrole_model = new pointcontrole_model(
+                                    current_inspection_id ,
+                                    list_questionnaire_id.get(i) ,
+                                    2,
+                                    "",
+                                    ""
+                            );
+                            dt = pointcontrole_dao.insertPointControle(pointcontrole_model);
+                            data_for_sync_dao.insertDataForSync(dt);
+                        }
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+
+                    current_inspection_id = vehiculeinspection_dao.getInspectionId(my_plannification.get_vehicule_id()) ;
+                    activity_model activity_model = new activity_model("inspection", current_inspection_id) ;
+                    activity_dao activity_dao = new activity_dao(view.getContext()) ;
+                    if(activity_dao.verify_if_exists("inspection").equals(true)) {
+                        activity_dao.remove_activity("inspection");
+                    }
+                    activity_dao.create_activity(activity_model);
+                }
+
+                List<vehicule_model> list_citerne = new ArrayList<>() ;
+                vehicule_dao vehicule_dao = new vehicule_dao(view.getContext()) ;
+                if(list_plannification.get(position).get_cterne_id() > 0) {
+                    list_citerne.add(vehicule_dao.getVehiculeById(list_plannification.get(position).get_cterne_id())) ;
+                }
+                else {
+                    list_citerne.add(vehicule_dao.getCiterneById(list_plannification.get(position).get_cterne_id())) ;
+                }
+                ArrayAdapter<vehicule_model> array_adapter_spinner_citerne = new ArrayAdapter<vehicule_model>(view.getContext(), android.R.layout.simple_spinner_item, list_citerne) ;
+                spinner_citerne_clcc_chargement.setAdapter(array_adapter_spinner_citerne);
+
+                List<transporteur_model> list_transporteur = new ArrayList<>() ;
+                list_transporteur.add(vehicule_dao.getTransporteur(my_vehicule.get_vehicule_id())) ;
+                ArrayAdapter<transporteur_model> array_adapter_spinner_spinner = new ArrayAdapter<transporteur_model>(view.getContext(), android.R.layout.simple_spinner_item, list_transporteur) ;
+                spinner_transporteur_clcc_chargement.setAdapter(array_adapter_spinner_spinner);
+
+                inspection_dao inspection_dao = new inspection_dao(view.getContext()) ;
+                inspection_model info = inspection_dao.getInspectionInfo(current_inspection_id) ;
+                date_chargement.setText(info.getInspection_datevisite());
+                heure_chargement.setText(info.getInspection_heuredebut());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+
+        });
+
+        //TRACTEUR
+
+        //CONDUCTEUR
+        List<users_model> users_models = users_dao.getAllConducteur() ;
+        ArrayAdapter<users_model> array_adapter_spinner_conducteur = new ArrayAdapter<users_model>(view.getContext(), android.R.layout.simple_spinner_item, users_models) ;
+        spinner_conducteur_clcc_chargement.setAdapter(array_adapter_spinner_conducteur);
+
+        spinner_conducteur_clcc_chargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+                inspection_dao inspection_dao = new inspection_dao(view.getContext()) ;
+                inspection_dao.updateConducteur(users_models.get(position).getId());
             }
 
             @Override
@@ -169,24 +289,21 @@ public class CLCC_chargement_Fragment extends Fragment {
 
             }
         });
+        //CONDUCTEUR
 
-        ArrayAdapter<spinner_content_model> array_adapter_spinner_citerne  = new ArrayAdapter( this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinner_citerne) ;
-        array_adapter_spinner_tracteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_citerne_clcc_chargement.setAdapter(array_adapter_spinner_tracteur);
-        spinner_citerne_clcc_chargement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinner_content_model selected = (spinner_content_model) parent.getSelectedItem() ;
-                Log.d("changed => ", String.valueOf(selected.get_description())) ;
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
+        //SAVE INSPECTION
+        save_inspection.setOnClickListener(v -> {
+            inspection_dao inspection_dao = new inspection_dao(view.getContext()) ;
+            inspection_dao.cloturerInspection();
+            Toast.makeText(view.getContext(), "Inpection clôturée avec succès", Toast.LENGTH_LONG).show();
         });
+        //SAVE INSPECTION
     }
-    public void fillDataToCategorieFragment() {
+
+    public void fillDataToCategorieFragment() throws JSONException {
+        categorieFragment = (CategorieFragment)this.getChildFragmentManager().findFragmentById(R.id.fragmentParent) ;
         activity_dao activity_dao = new activity_dao(view.getContext()) ;
         activity_model activity_model = activity_dao.getActivityByTableName("typeoperation") ;
         questionnaire_dao questionnaire_dao = new questionnaire_dao(view.getContext()) ;
@@ -198,10 +315,9 @@ public class CLCC_chargement_Fragment extends Fragment {
             }
             activity_dao.create_activity(activity_model1);
             for(int i = 0 ; i < list.size() ; i++) {
-                categorieFragment.add_categorie(list.get(i).getCategorie_nom(), list.get(i).getQuestionnaire());
+               categorieFragment.add_categorie(list.get(i).getCategorie_nom(), list.get(i).getQuestionnaire());
             }
         }
-
     }
 
 
@@ -227,4 +343,14 @@ public class CLCC_chargement_Fragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void reload(){
+        Log.d("reload", "ok") ;
+        FragmentTransaction ft = this.getFragmentManager().beginTransaction() ;
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
+    }
+
 }

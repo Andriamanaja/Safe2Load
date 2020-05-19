@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.safe2load.R;
+import com.example.safe2load.RecyclerView.InspectionRecyclerView;
 import com.example.safe2load.ViewPagerAdapter.ViewPagerAdapter;
 import com.google.gson.Gson;
 
@@ -52,20 +54,12 @@ public class CategorieFragment extends Fragment {
     TabLayout tabLayout ;
     ViewPagerAdapter viewPagerAdapter ;
     View view ;
+    ViewGroup vg ;
 
     public CategorieFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategorieFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CategorieFragment newInstance(String param1, String param2) {
         CategorieFragment fragment = new CategorieFragment();
         Bundle args = new Bundle();
@@ -91,6 +85,7 @@ public class CategorieFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_categorie, container, false);
         this.getIDs();
         this.setEvents();
+        vg = container ;
         return view ;
     }
 
@@ -125,13 +120,10 @@ public class CategorieFragment extends Fragment {
     }
 
     public void add_categorie(String nom_categorie, String _list_controle_model) {
-
         Bundle bundle = new Bundle() ;
         bundle.putString("_list_inspection", _list_controle_model) ;
-
         InspectionFragment inspectionFragment = new InspectionFragment() ;
         inspectionFragment.setArguments(bundle);
-
         viewPagerAdapter.addFrag(inspectionFragment, nom_categorie);
         viewPagerAdapter.notifyDataSetChanged();
         if(viewPagerAdapter.getCount() > 0) {
@@ -163,18 +155,9 @@ public class CategorieFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

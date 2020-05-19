@@ -198,7 +198,7 @@ public class CLCC_dechargement_Fragment extends Fragment {
             }
             activity_dao.create_activity(activity_model1);
             for(int i = 0 ; i < list.size() ; i++) {
-                categorieFragment.add_categorie(list.get(i).getCategorie_nom(), list.get(i).getQuestionnaire());
+                //categorieFragment.add_categorie(list.get(i).getCategorie_nom(), list.get(i).getQuestionnaire());
             }
         }
     }

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.safe2load.R;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -24,6 +26,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     TabLayout tabLayout ;
     private final ArrayList<Fragment> mFragmentList = new ArrayList<>() ;
     private final ArrayList<String> mFragmentTitleList = new ArrayList<>() ;
+
+    private ArrayList<Fragment> allFragmant = new ArrayList<>();
+    private ArrayList<String> allTitle = new ArrayList<>() ;
+
 
     public ViewPagerAdapter(FragmentManager fm, Context context, ViewPager viewPager, TabLayout tabLayout) {
         super(fm);
@@ -49,6 +55,22 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public void addFrag(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
+
+        if(mFragmentList.contains(title)) {
+
+        }
+    }
+
+
+
+    public void removeFrag(int position) {
+        removeTab(position);
+        Log.d("size" , String.valueOf(mFragmentList.size()));
+        Fragment fragment = mFragmentList.get(position);
+        mFragmentList.remove(fragment);
+        mFragmentTitleList.remove(position);
+        destroyFragmentView(fragment);
+        notifyDataSetChanged();
     }
 
     public View getTabView (final int position) {
@@ -58,12 +80,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return view;
     }
 
-    public void destroyFragmentView(ViewGroup container, int position, Object object) {
-        FragmentManager manager = ((Fragment) object).getFragmentManager();
-        FragmentTransaction trans = manager.beginTransaction();
-        trans.remove((Fragment) object);
+    public void destroyFragmentView(Fragment fragment) {
+        FragmentTransaction trans = fragment.getChildFragmentManager().beginTransaction();
+        trans.remove(fragment);
         trans.commit();
     }
+
 
     public void removeTab(int position) {
         if (tabLayout.getChildCount() > 0) {

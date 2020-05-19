@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.safe2load.R;
@@ -41,6 +42,7 @@ public class CLCC_baremage_Fragment extends Fragment {
     Spinner spinner_tracteur_clcc_baremage ;
     Spinner spinner_citerne_clcc_baremage ;
     CategorieFragment categorieFragment ;
+    Button save_inspection ;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,6 +80,7 @@ public class CLCC_baremage_Fragment extends Fragment {
         spinner_conducteur_clcc_baremage = view.findViewById(R.id.spinner_conducteur_clcc_baremage) ;
         spinner_transporteur_clcc_baremage = view.findViewById(R.id.spinner_transporteur_clcc_baremage) ;
         spinner_citerne_clcc_baremage = view.findViewById(R.id.spinner_citerne_clcc_baremage) ;
+
     }
 
     public void fillDataToAllSpinner () {
@@ -192,7 +195,7 @@ public class CLCC_baremage_Fragment extends Fragment {
             }
             activity_dao.create_activity(activity_model1);
             for(int i = 0 ; i < list.size() ; i++) {
-                categorieFragment.add_categorie(list.get(i).getCategorie_nom(), list.get(i).getQuestionnaire());
+                //categorieFragment.add_categorie(list.get(i).getCategorie_nom(), list.get(i).getQuestionnaire());
             }
         }}
 

@@ -2,6 +2,7 @@ package database.helper.dao;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import database.helper.database_helper;
@@ -44,5 +45,7 @@ public class typeoeration_dao extends database_helper {
 
         return typeoperation_model ;
     }
+
+
 
 }

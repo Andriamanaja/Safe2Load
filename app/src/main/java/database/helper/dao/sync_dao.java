@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.helper.database_helper;
+import model.object.users_model;
 
 public class sync_dao extends database_helper {
 
@@ -35,11 +36,21 @@ public class sync_dao extends database_helper {
 
     }
 
+    public boolean verify_if_users_exist(int user_id) {
+        String query = "select * from users where id = " + user_id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        if(db.rawQuery(query, null).getCount() > 0) {
+            return true ;
+        }
+        else {
+            return false ;
+        }
+    }
+
     private Boolean generate_query_for_verifying(JSONObject object) throws JSONException {
         String query = "";
 
-        if(this.table_name.equals("users") == true) {
-            Log.d("table_name => " , this.table_name) ;
+        if(this.table_name.equals("users") == true || this.table_name.equals("groups") == true) {
             query = "select * from " + this.table_name + " where id = " + object.getString( "id") ;
         }
         else {
@@ -98,7 +109,13 @@ public class sync_dao extends database_helper {
         for (int i = 0 ; i < str.size()-1 ; i++) {
             columns_string +=  str.get(i) + " = \"" + object.get(str.get(i)) + "\", ";
         }
-        columns_string += str.get(str.size()-1) + " = \"" + object.getString(str.get(str.size()-1)) + "\" where " + this.table_name + "_id = " + object.getString( this.table_name+"_id");
+
+        if(this.table_name.equals("users") == true || this.table_name.equals("groups") == true) {
+            columns_string += str.get(str.size()-1) + " = \"" + object.getString(str.get(str.size()-1)) + "\" where id = " + object.getString( "id");
+        }
+        else {
+            columns_string += str.get(str.size()-1) + " = \"" + object.getString(str.get(str.size()-1)) + "\" where " + this.table_name + "_id = " + object.getString( this.table_name+"_id");
+        }
         String sql = "update "+ this.table_name +" set " + columns_string ;
         return sql ;
     }

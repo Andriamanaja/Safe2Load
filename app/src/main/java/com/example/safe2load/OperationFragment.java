@@ -142,8 +142,8 @@ public class OperationFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
             try {
                 fragmentManager.beginTransaction().replace(R.id.layout_content, CLCC_baremage_Fragment.class.newInstance()).commit() ;
-                getActivity().setTitle("CLCC Barémage");
-                add_to_activity("CLCC Barémage") ;
+                getActivity().setTitle("CLCC Barénage");
+                add_to_activity("CLCC Barénage") ;
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
@@ -173,7 +173,6 @@ public class OperationFragment extends Fragment {
         bnt_clcc_chargement.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcp.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcc_baremage.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
-
         is_open = true ;
     }
 

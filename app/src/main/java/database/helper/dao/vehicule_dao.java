@@ -1,12 +1,14 @@
 package database.helper.dao;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import database.helper.database_helper;
+import model.object.transporteur_model;
 import model.object.vehicule_model;
 
 public class vehicule_dao extends database_helper {
@@ -42,5 +44,46 @@ public class vehicule_dao extends database_helper {
             Log.d("database" , "vita n insert") ;
             this.getWritableDatabase().close();
         }
+    }
+
+    public vehicule_model getVehiculeById(int id) {
+        String sql = "select vehicule_id , vehicule_immatriculation from vehicule where vehicule_id = " + id ;
+        vehicule_model vehicule_model = new vehicule_model() ;
+        Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
+        if(cursor.moveToFirst()) {
+            do{
+                vehicule_model.set_vehicule_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex("vehicule_id"))));
+                vehicule_model.set_vehicule_immatriculation(cursor.getString(cursor.getColumnIndex("vehicule_immatriculation")));
+            }while (cursor.moveToNext()) ;
+        }
+        return vehicule_model;
+    }
+
+    public vehicule_model getCiterneById(int id) {
+        String sql = "select vehicule_id , citerne_immatriculation from vehicule where vehicule_id = " + id ;
+        vehicule_model vehicule_model = new vehicule_model() ;
+        Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
+        if(cursor.moveToFirst()) {
+            do{
+                vehicule_model.set_vehicule_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex("vehicule_id"))));
+                vehicule_model.set_vehicule_immatriculation(cursor.getString(cursor.getColumnIndex("citerne_immatriculation")));
+            }while (cursor.moveToNext()) ;
+        }
+        return vehicule_model;
+    }
+
+    public transporteur_model getTransporteur(int id) {
+        String sql = "select users.id, users.last_name from users inner join vehicule on users.id = vehicule.id where vehicule.vehicule_id = " + id ;
+        Log.d("getTransporteur => ", sql) ;
+        transporteur_model transporteur_model = new transporteur_model() ;
+        Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
+        if(cursor.moveToFirst()) {
+            do{
+                int iduseur = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
+                String last_name = cursor.getString(cursor.getColumnIndex("last_name")) ;
+                transporteur_model = new transporteur_model(iduseur, last_name) ;
+            }while (cursor.moveToNext()) ;
+        }
+        return transporteur_model ;
     }
 }

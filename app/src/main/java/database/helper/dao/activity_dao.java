@@ -85,6 +85,6 @@ public class activity_dao extends database_helper {
             sqLiteStatement.execute();
         }
         this.getWritableDatabase().close();
-        Log.d("insert => " , "success") ;
+        Log.d("" + activity.get_table_name() + " => " , String.valueOf(activity.get_table_id())) ;
     }
 }

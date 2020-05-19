@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import com.example.safe2load.Fragment.CategorieFragment;
 import com.example.safe2load.SynchroUtils.ApiUtils;
+import com.example.safe2load.SynchroUtils.SynchroController;
 import com.example.safe2load.SynchroUtils.SynchroService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,9 +31,11 @@ import org.json.JSONStringer;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.helper.dao.data_for_sync_dao;
 import database.helper.dao.sync_dao;
 import database.helper.dao.vehicule_dao;
 import model.object.vehicule_model;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -105,65 +109,18 @@ public class SynchroFragment extends Fragment {
     }
 
     public void sync_all() {
-
-        Call<Object> call_user = synchroService.getAllUsers() ;
-        call_user.enqueue(new Callback<Object>() {
-
-            @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
-                try {
-                    Gson gson = new Gson() ;
-                    JSONArray users = new JSONArray(gson.toJson(response.body()));
-                    if (users.length() > 0) {
-                        for(int i = 0 ; i < users.length() ; i++) {
-                            sync_dao sd = new sync_dao(view.getContext()) ;
-                           // sd.generic_insert(users.getJSONObject(i));
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Object> call, Throwable t) {
-
-            }
-        });
-
-        Call<Object> call = synchroService.getAllData();
-        call.enqueue(new Callback<Object>() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
-                if(response.isSuccessful()) {
-
-                    try {
-                        Gson gson = new Gson() ;
-                        JSONObject jsonObject = new JSONObject(gson.toJson(response.body()));
-                        JSONArray to_offline = new JSONArray(jsonObject.get("to_offline").toString());
-                        JSONArray from_offline = new JSONArray(jsonObject.get("from_offline").toString());
-
-                        if (to_offline.length() > 0) {
-                            for(int i = 0 ; i < to_offline.length() ; i++) {
-                                sync_dao sd = new sync_dao(view.getContext()) ;
-                                sd.generic_insert(to_offline.getJSONObject(i));
-                            }
-                            Toast.makeText(view.getContext(), "Synchronisation effectuée avec succès", Toast.LENGTH_LONG).show();
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Object> call, Throwable t) {
-                Log.e("ERROR: ", t.getMessage());
-            }
-        });
-
+        Toast.makeText(view.getContext(), "Votre synchronisation a commencé", Toast.LENGTH_LONG).show() ;
+        data_for_sync_dao data_for_sync_dao = new data_for_sync_dao(view.getContext()) ;
+        SynchroController synchroController = new SynchroController(view.getContext()) ;
+        synchroController.getAllUserFromOnline();
+        JSONObject data_for_sync = data_for_sync_dao.getAllDataForSync() ;
+        RequestBody requestBody = null ;
+        try {
+            requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), data_for_sync.toString());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        synchroController.getAllDataFromOnline(requestBody);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

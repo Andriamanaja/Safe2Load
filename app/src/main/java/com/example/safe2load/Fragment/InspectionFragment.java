@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.safe2load.R;
 import com.example.safe2load.RecyclerView.InspectionRecyclerView;
@@ -65,6 +66,8 @@ public class InspectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         Bundle bundle = getArguments() ;
         _list_controle_model = new ArrayList<>() ;
         try {
@@ -79,12 +82,13 @@ public class InspectionFragment extends Fragment {
             e.printStackTrace();
         }
 
-
-        View view = inflater.inflate(R.layout.fragment_inspection, container, false);
+        view = inflater.inflate(R.layout.fragment_inspection, container, false);
         _recyclerView = view.findViewById(R.id._inspection_recycler_view) ;
-        InspectionRecyclerView inspectionRecyclerView = new InspectionRecyclerView(this.getContext(), _list_controle_model) ;
+        InspectionRecyclerView inspectionRecyclerView = new InspectionRecyclerView(this.getContext()) ;
+        inspectionRecyclerView.setItems( _list_controle_model);
         _recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         _recyclerView.setAdapter(inspectionRecyclerView);
+        Toast.makeText(view.getContext(), "tonga ato inspection fragment", Toast.LENGTH_LONG).show();
         return view ;
     }
 

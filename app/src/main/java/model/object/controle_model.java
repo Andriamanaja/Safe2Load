@@ -25,12 +25,22 @@ public class controle_model {
     public controle_model(JSONObject object) throws JSONException {
         this._id = object.getInt("_id") ;
         this._descrption = object.getString("_description") ;
+        if(object.getInt("_is_true") == 1) {
+            this._is_true = true ;
+        }else {
+            this._is_true = false ;
+        }
     }
 
     public controle_model(int _id, String _descrption, boolean _is_true) {
         this._id = _id;
         this._descrption = _descrption;
         this._is_true = _is_true;
+    }
+
+    public controle_model(int _id, String _descrption) {
+        this._id = _id;
+        this._descrption = _descrption;
     }
 
     public controle_model(String _descrption, boolean _is_true) {

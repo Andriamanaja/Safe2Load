@@ -16,42 +16,123 @@
         android:padding="5dp"
         android:visibility="visible">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.1"
-            android:text="Date : 23/04/2020"
-            android:textColor="@color/transparent"
-            android:textSize="12dp"
-            android:textStyle="bold" />
+            android:layout_weight="0.1"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Date : "
+                android:textColor="@color/transparent"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date_chargement"
+                android:textSize="12dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.1"
-            android:text="Heure : 00:00"
-            android:textColor="@color/transparent"
-            android:textSize="12dp"
-            android:textStyle="bold" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.1"
-            android:text="Dépôt de : Sorano"
-            android:textColor="@color/transparent"
-            android:textSize="12dp"
-            android:textStyle="bold" />
+            android:layout_weight="0.1"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Heure : "
+                android:textColor="@color/transparent"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/heure_chargement"
+                android:textSize="12dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.1"
-            android:text="Date : 23/04/2020"
-            android:textColor="@color/transparent"
-            android:textSize="12dp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:layout_weight="0.1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dépôt : "
+                android:textColor="@color/transparent"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/depot_chargement"
+                android:textColor="@color/black_text"
+                android:textSize="12dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:orientation="horizontal">
+                <Button
+                    android:id="@+id/save_inspection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="Clôturer"/>
+        </LinearLayout>
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="13dp"
+                android:text="Numero tracteur"/>
+            <Spinner
+                android:id="@+id/spinner_tracteur_clcc_chargement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Spinner.Underlined"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="13dp"
+                android:text="Numero citerne"/>
+            <Spinner
+                android:id="@+id/spinner_citerne_clcc_chargement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Spinner.Underlined"/>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/info_container"
@@ -104,47 +185,11 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="13dp"
-                    android:text="Numero tracteur"/>
-                <Spinner
-                    android:id="@+id/spinner_tracteur_clcc_chargement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="13dp"
-                    android:text="Numero citerne"/>
-                <Spinner
-                    android:id="@+id/spinner_citerne_clcc_chargement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
-            </LinearLayout>
-        </LinearLayout>
 
     </LinearLayout>
+
+
 
     <fragment
         android:id="@+id/fragmentParent"

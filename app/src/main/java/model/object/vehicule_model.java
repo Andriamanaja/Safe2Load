@@ -116,6 +116,17 @@ public class vehicule_model {
         this._transporteur_suspend = _transporteur_suspend;
     }
 
+    public vehicule_model() {
+
+    }
+
+    public vehicule_model(int vehicule_id, String vehicule_immatriculation, int cterne_id, int vehicule_type_id) {
+        this._vehicule_id = vehicule_id ;
+        this._vehicule_immatriculation = vehicule_immatriculation ;
+        this._citerne_id = cterne_id;
+        this._vehiculetype_id = vehicule_type_id ;
+    }
+
     /*public String verify_is_string_is_null(String data) {
         if(data == null) {
             return "" ;
@@ -291,5 +302,22 @@ public class vehicule_model {
 
     public String get_transporteur_suspend() {
         return _transporteur_suspend;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.get_vehicule_immatriculation() ;
+    }
+
+    public vehicule_model(Integer _vehicule_id, String _vehicule_immatriculation) {
+        this._vehicule_id = _vehicule_id;
+        this._vehicule_immatriculation = _vehicule_immatriculation;
+    }
+
+    public vehicule_model(Integer _vehicule_id, String _vehicule_immatriculation, Integer _citerne_id) {
+        this._vehicule_id = _vehicule_id;
+        this._vehicule_immatriculation = _vehicule_immatriculation;
+        this._citerne_id = _citerne_id;
     }
 }
