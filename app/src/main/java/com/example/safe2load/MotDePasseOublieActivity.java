@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,6 +20,8 @@ public class MotDePasseOublieActivity extends AppCompatActivity {
     private String email, mdp, cmdp;
     private EditText emailEditText, mdpEditText, cmdpEditText;
     private database.helper.dao.res_users_dao res_users_dao;
+    private long back_pressed ;
+    private Toast toast ;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -133,5 +134,17 @@ public class MotDePasseOublieActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.show();
     }
-
+    @Override
+    public void onBackPressed() {
+        if(back_pressed+2000>System.currentTimeMillis()) {
+            toast.cancel();
+            super.onBackPressed();
+            return;
+        }
+        else {
+            toast = Toast.makeText(getBaseContext(), "Appuyez une deusième fois pour quitter.", Toast.LENGTH_LONG);
+            toast.show();
+        }
+        back_pressed = System.currentTimeMillis() ;
+    }
 }

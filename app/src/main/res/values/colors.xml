@@ -14,6 +14,7 @@
     <color name="non_confrme">#CD0505</color>
     <color name="unconforme">#C2C0C0</color>
     <color name="rouge">#FF6633</color>
+    <color name="bleu">#6699CC</color>
 
     <dimen name="defaulttxt_field_width">70dp</dimen>
 </resources>

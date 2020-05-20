@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 
 import com.example.safe2load.DetailActivity;
 import com.example.safe2load.R;
-import com.example.safe2load.detail_stat;
+import com.example.safe2load.ViewPagerAdapter.detail_activity;
 
 import java.util.List;
 

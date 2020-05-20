@@ -1,7 +1,6 @@
 package com.example.safe2load;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,14 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.telecom.Call;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,11 +24,6 @@ import java.io.ByteArrayOutputStream;
 
 import database.helper.dao.pointcontrole_dao;
 import database.helper.dao.users_dao;
-
-import database.helper.dao.activity_dao;
-import database.helper.dao.typeoeration_dao;
-import model.object.activity_model;
-import model.object.typeoperation_model;
 
 public class Menu2Activity extends AppCompatActivity {
 
@@ -58,11 +49,7 @@ public class Menu2Activity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupDrawerContext(navigationView);
 
-//        bnt__clcc_dechargement = findViewById(R.id.bnt__clcc_dechargement);
-//        bnt_clcc_chargement = findViewById(R.id.bnt_clcc_chargement);
-//        bnt_clcp = findViewById(R.id.bnt_clcp);
-//        bnt_clcc_baremage =findViewById(R.id.bnt_clcc_baremage);
-//        btn_clwp = findViewById(R.id.btn_clwr);
+
 
 
     }
@@ -156,6 +143,8 @@ public class Menu2Activity extends AppCompatActivity {
             Log.d("tsy ato eh" , "khz") ;
         }
     }
+
+
 
 
     }

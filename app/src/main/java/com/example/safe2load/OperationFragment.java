@@ -1,19 +1,15 @@
 package com.example.safe2load;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
 
 import com.example.safe2load.Fragment.CLCC_baremage_Fragment;
 import com.example.safe2load.Fragment.CLCC_chargement_Fragment;
@@ -185,8 +181,8 @@ public class OperationFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
             try {
                 fragmentManager.beginTransaction().replace(R.id.layout_content, CLWP_Fragment.class.newInstance()).commit() ;
-                getActivity().setTitle("CLWP");
-                add_to_activity("CLWP");
+                getActivity().setTitle("CLWR");
+                add_to_activity("CLWR");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
