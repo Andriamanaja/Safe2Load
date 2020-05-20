@@ -55,22 +55,31 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public void addFrag(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
-
-        if(mFragmentList.contains(title)) {
-
-        }
     }
 
+    public void addInspec() {
 
+    }
+
+    public void removeAllFrag() {
+        for (int i = 0 ; i <= mFragmentList.size() ; i++ ) {
+            removeTab(0);
+            Fragment fragment = mFragmentList.get(0);
+            mFragmentList.remove(fragment);
+            mFragmentTitleList.remove(0);
+            destroyFragmentView(viewPager, 0, fragment);
+        }
+        this.notifyDataSetChanged();
+    }
 
     public void removeFrag(int position) {
+        Log.d("remove => " , String.valueOf(position)) ;
         removeTab(position);
-        Log.d("size" , String.valueOf(mFragmentList.size()));
         Fragment fragment = mFragmentList.get(position);
         mFragmentList.remove(fragment);
         mFragmentTitleList.remove(position);
-        destroyFragmentView(fragment);
-        notifyDataSetChanged();
+        destroyFragmentView(viewPager, position, fragment);
+        this.notifyDataSetChanged();
     }
 
     public View getTabView (final int position) {
@@ -80,17 +89,16 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return view;
     }
 
-    public void destroyFragmentView(Fragment fragment) {
-        FragmentTransaction trans = fragment.getChildFragmentManager().beginTransaction();
-        trans.remove(fragment);
+    public void destroyFragmentView(ViewGroup container, int position, Object object) {
+        FragmentManager manager = ((Fragment) object).getFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.remove((Fragment) object);
         trans.commit();
     }
 
 
     public void removeTab(int position) {
-        if (tabLayout.getChildCount() > 0) {
-            tabLayout.removeTabAt(position);
-        }
+        tabLayout.removeTabAt(position);
     }
 
     @Override

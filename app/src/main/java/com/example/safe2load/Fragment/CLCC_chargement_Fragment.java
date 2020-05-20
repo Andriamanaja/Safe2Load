@@ -62,7 +62,12 @@ import model.object.vehicule_model;
 
 import static database.helper.dao.vehicule_dao.*;
 
-public class CLCC_chargement_Fragment extends Fragment {
+public class CLCC_chargement_Fragment extends Fragment  {
+
+    public interface CategorieFragmentListner {
+        void onTracteurChange() ;
+    }
+    CategorieFragmentListner categorieFragmentListner ;
 
     private List<plannification_model> list_plannification = new ArrayList<>() ;
 
@@ -124,11 +129,7 @@ public class CLCC_chargement_Fragment extends Fragment {
             e.printStackTrace();
         }
 
-        try {
-            fillDataToCategorieFragment();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
         return view ;
     }
@@ -142,6 +143,8 @@ public class CLCC_chargement_Fragment extends Fragment {
         date_chargement = view.findViewById(R.id.date_chargement) ;
         heure_chargement = view.findViewById(R.id.heure_chargement) ;
         depot_chargement = view.findViewById(R.id.depot_chargement) ;
+
+
     }
 
     public void fillDataToAllSpinner () throws ParseException {
@@ -165,13 +168,9 @@ public class CLCC_chargement_Fragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-
-
                 depot_dao depot_dao = new depot_dao(view.getContext()) ;
                 depot_model depot_model = depot_dao.getDepotById(list_plannification.get(position).get_depot_id()) ;
                 depot_chargement.setText(depot_model.getDepot_nom());
-
-                Log.d("depot => ", depot_model.getDepot_nom()) ;
 
                 pointcontrole_dao pointcontrole_dao = new pointcontrole_dao(view.getContext()) ;
                 plannification_model my_plannification = list_plannification.get(position) ;
@@ -196,9 +195,6 @@ public class CLCC_chargement_Fragment extends Fragment {
                         activity_dao.create_activity(activity_model);
                         vehicule_dao vehicule_dao = new vehicule_dao(view.getContext()) ;
                         int idtransporteur = vehicule_dao.getTransporteur(my_vehicule.get_vehicule_id()).getId() ;
-                       // data_for_sync_model dt = vehiculeinspection_dao.insertInspectionVehicule(new inspectionvehicule_model(my_vehicule.get_vehicule_id(), current_inspection_id));
-                       // data_for_sync_dao data_for_sync_dao = new data_for_sync_dao(view.getContext()) ;
-                       // data_for_sync_dao.insertDataForSync(dt);
                         inspection_model inspection_model = new inspection_model(
                                 users_dao.getConnectedUser().getId(),
                                 0,
@@ -242,6 +238,12 @@ public class CLCC_chargement_Fragment extends Fragment {
                     activity_dao.create_activity(activity_model);
                 }
 
+                try {
+                    fillDataToCategorieFragment(current_inspection_id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 List<vehicule_model> list_citerne = new ArrayList<>() ;
                 vehicule_dao vehicule_dao = new vehicule_dao(view.getContext()) ;
                 if(list_plannification.get(position).get_cterne_id() > 0) {
@@ -266,6 +268,11 @@ public class CLCC_chargement_Fragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                try {
+                    fillDataToCategorieFragment(current_inspection_id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
@@ -302,21 +309,23 @@ public class CLCC_chargement_Fragment extends Fragment {
         //SAVE INSPECTION
     }
 
-    public void fillDataToCategorieFragment() throws JSONException {
+    public void fillDataToCategorieFragment(int id_inspection_mobile) throws JSONException {
         categorieFragment = (CategorieFragment)this.getChildFragmentManager().findFragmentById(R.id.fragmentParent) ;
         activity_dao activity_dao = new activity_dao(view.getContext()) ;
         activity_model activity_model = activity_dao.getActivityByTableName("typeoperation") ;
         questionnaire_dao questionnaire_dao = new questionnaire_dao(view.getContext()) ;
-        List<categorie_questionnaire_model> list = questionnaire_dao.getCategorieQuestionnaireBycatId(activity_model.get_table_id()) ;
+        List<categorie_questionnaire_model> list = new ArrayList<>() ;
+        list = questionnaire_dao.getCategorieQuestionnaireBycatId(activity_model.get_table_id(), id_inspection_mobile) ;
         if(list.size() > 0) {
             activity_model activity_model1 = new activity_model("categorie", list.get(0).getCategorie_id()) ;
             if(activity_dao.verify_if_exists("categorie").equals(true)) {
                 activity_dao.remove_activity("categorie");
             }
             activity_dao.create_activity(activity_model1);
-            for(int i = 0 ; i < list.size() ; i++) {
+            /*for(int i = 0 ; i < list.size() ; i++) {
                categorieFragment.add_categorie(list.get(i).getCategorie_nom(), list.get(i).getQuestionnaire());
-            }
+            }*/
+            categorieFragment.add_categorie(list);
         }
     }
 
@@ -331,6 +340,12 @@ public class CLCC_chargement_Fragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+      /*  if(context instanceof CategorieFragmentListner) {
+            categorieFragmentListner = (CategorieFragmentListner) view.getContext() ;
+        }
+        else {
+            throw new RuntimeException(context.toString() + "kititseee..................") ;
+        } */
     }
 
     @Override

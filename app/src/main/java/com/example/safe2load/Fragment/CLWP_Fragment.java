@@ -188,7 +188,7 @@ public class CLWP_Fragment extends Fragment {
         activity_dao activity_dao = new activity_dao(view.getContext()) ;
         activity_model activity_model = activity_dao.getActivityByTableName("typeoperation") ;
         questionnaire_dao questionnaire_dao = new questionnaire_dao(view.getContext()) ;
-        List<categorie_questionnaire_model> list = questionnaire_dao.getCategorieQuestionnaireBycatId(activity_model.get_table_id()) ;
+        List<categorie_questionnaire_model> list = questionnaire_dao.getCategorieQuestionnaireBycatId(activity_model.get_table_id(), 0) ;
         if(list.size() > 0) {
             activity_model activity_model1 = new activity_model("categorie", list.get(0).getCategorie_id()) ;
             if(activity_dao.verify_if_exists("categorie").equals(true)) {

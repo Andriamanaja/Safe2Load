@@ -19,6 +19,8 @@ import com.example.safe2load.RecyclerView.InspectionRecyclerView;
 import com.example.safe2load.ViewPagerAdapter.ViewPagerAdapter;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,17 +28,13 @@ import database.helper.dao.activity_dao;
 import database.helper.dao.categorie_dao;
 import model.object.activity_model;
 import model.object.categorie_model;
+import model.object.categorie_questionnaire_model;
 import model.object.controle_model;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CategorieFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CategorieFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CategorieFragment extends Fragment {
+
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,6 +53,8 @@ public class CategorieFragment extends Fragment {
     ViewPagerAdapter viewPagerAdapter ;
     View view ;
     ViewGroup vg ;
+
+
 
     public CategorieFragment() {
         // Required empty public constructor
@@ -100,42 +100,64 @@ public class CategorieFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                activity_dao activity_dao = new activity_dao(view.getContext()) ;
-                categorie_dao categorie_dao = new categorie_dao(view.getContext()) ;
-                categorie_model categorie_model = categorie_dao.getCategorieByTableName( tab.getText().toString()) ;
-                activity_model activity_model = new activity_model("categorie", categorie_model.get_categorie_id()) ;
-                activity_dao.update_activity(activity_model, activity_dao.getActivityByTableName("categorie").get_table_id());
+                reloadActivity(tab) ;
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                reloadActivity(tab) ;
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                reloadActivity(tab) ;
             }
         });
     }
 
-    public void add_categorie(String nom_categorie, String _list_controle_model) {
-        Bundle bundle = new Bundle() ;
-        bundle.putString("_list_inspection", _list_controle_model) ;
-        InspectionFragment inspectionFragment = new InspectionFragment() ;
-        inspectionFragment.setArguments(bundle);
-        viewPagerAdapter.addFrag(inspectionFragment, nom_categorie);
-        viewPagerAdapter.notifyDataSetChanged();
-        if(viewPagerAdapter.getCount() > 0) {
-            tabLayout.setupWithViewPager(viewPager);
-        }
-        viewPager.setCurrentItem(0);
-        selectedTabPosition = viewPager.getCurrentItem() ;
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            tabLayout.getTabAt(i).setCustomView(viewPagerAdapter.getTabView(i));
+    public void reloadActivity(TabLayout.Tab tab) {
+        activity_dao activity_dao = new activity_dao(view.getContext()) ;
+        categorie_dao categorie_dao = new categorie_dao(view.getContext()) ;
+        categorie_model categorie_model = categorie_dao.getCategorieByTableName( tab.getText().toString()) ;
+        activity_model activity_model = new activity_model("categorie", categorie_model.get_categorie_id()) ;
+        activity_dao.update_activity(activity_model, activity_dao.getActivityByTableName("categorie").get_table_id());
+    }
+
+    public void add_categorie(List<categorie_questionnaire_model> list) throws JSONException {
+
+        Log.d("count => ", String.valueOf(list.size()));
+
+        /*if( viewPagerAdapter.getCount() > 0 ) {
+            for(int i = 0;  i < viewPagerAdapter.getCount() ; i++ ) {
+                viewPagerAdapter.removeFrag(0);
+            }
+        } */
+
+        viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getContext(), viewPager, tabLayout) ;
+        viewPager.setAdapter(viewPagerAdapter);
+
+      Log.d("count => ", String.valueOf(viewPagerAdapter.getCount()));
+
+        for(int w = 0 ; w < list.size(); w++) {
+           /* Bundle bundle = new Bundle() ;
+            bundle.putString("_list_inspection", list.get(w).getQuestionnaire()) ;*/
+            InspectionFragment inspectionFragment = new InspectionFragment(list.get(w).getQuestionnaire()) ;
+           // inspectionFragment.setArguments(bundle);
+            viewPagerAdapter.addFrag(inspectionFragment, list.get(w).getCategorie_nom());
+            viewPagerAdapter.notifyDataSetChanged();
+            if(viewPagerAdapter.getCount() > 0) {
+                tabLayout.setupWithViewPager(viewPager);
+            }
+            viewPager.setCurrentItem(0);
+            selectedTabPosition = viewPager.getCurrentItem() ;
+            for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                tabLayout.getTabAt(i).setCustomView(viewPagerAdapter.getTabView(i));
+            }
         }
 
+
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

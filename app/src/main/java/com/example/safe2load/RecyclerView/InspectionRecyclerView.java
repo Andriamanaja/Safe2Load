@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -15,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -29,11 +32,15 @@ import android.widget.Toast;
 
 import com.example.safe2load.R;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import database.helper.dao.activity_dao;
 import database.helper.dao.pointcontrole_dao;
+import database.helper.dao.questionnaire_dao;
 import model.object.activity_model;
+import model.object.categorie_questionnaire_model;
 import model.object.controle_model;
 import model.object.pointcontrole_model;
 
@@ -83,10 +90,13 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
         this.vh = viewHolder ;
         viewHolder._id_doc_potrail.setText(String.valueOf(list_controle_model.get(i).get_id()));
         viewHolder._desc_doc_portail.setText(list_controle_model.get(i).get_descrption());
+        Log.d("irv => " , list_controle_model.get(i).get_id() + " => " +  String.valueOf(list_controle_model.get(i).is_is_true()));
         viewHolder._is_actif_doc_portail.setChecked(list_controle_model.get(i).is_is_true());
 
         if(list_controle_model.get(i).get_image().equals("") == false) {
-            
+            byte[] bytes = Base64.decode(list_controle_model.get(i).get_image(), Base64.DEFAULT) ;
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0,bytes.length) ;
+            viewHolder._image_doc_portail.setImageBitmap(bitmap);
         }
 
         viewHolder._btn_edit_doc_portail.setOnClickListener(v -> {

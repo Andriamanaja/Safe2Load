@@ -125,7 +125,7 @@ public class Menu2Activity extends AppCompatActivity {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data") ;
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream() ;
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream) ;
-            byte[] bytes = byteArrayOutputStream.toByteArray() ;Log.d("my_blob => " , data.getExtras().get("data").toString()) ;
+            byte[] bytes = byteArrayOutputStream.toByteArray() ;
             String encoded_image = Base64.encodeToString(bytes, Base64.DEFAULT) ;
             pointcontrole_dao pointcontrole_dao = new pointcontrole_dao(this) ;
             pointcontrole_dao.updateImage(encoded_image);

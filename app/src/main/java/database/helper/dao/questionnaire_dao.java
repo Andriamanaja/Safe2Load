@@ -15,10 +15,11 @@ public class questionnaire_dao extends database_helper {
         super(context);
     }
 
-    public List<categorie_questionnaire_model> getCategorieQuestionnaireBycatId(int catId) {
+    public List<categorie_questionnaire_model> getCategorieQuestionnaireBycatId(int catId, int insp_id) {
         List<categorie_questionnaire_model> list = new ArrayList<>() ;
         //String sql = "select questionnaire.categorie_id, questionnaire.categorie_nom, ( '[' || ( group_concat ( ('{\"_id\" : \"' || questionnaire.questionnaire_id || '\", \"_description\" : \"' || questionnaire.questionnaire_libelle || '\"}' ) , ',' ) ) || ']' ) as questionnaire from questionnaire where questionnaire.typeoperation_id = "+ catId +" group by questionnaire.categorie_id" ;
-        String sql = "select questionnaire.categorie_id, questionnaire.categorie_nom, ( '[' || ( group_concat ( ('{\"_id\" : \"' || questionnaire.questionnaire_id || '\", \"_description\" : \"' || questionnaire.questionnaire_libelle || '\", \"_is_true\" : \"' || pointcontrole.pointcontrole_conforme || '\", \"_photo\" : \"' || pointcontrole.pointcontrole_photo || '\"}' ) , ',' ) ) || ']' ) as questionnaire from questionnaire inner join pointcontrole on questionnaire.questionnaire_id = pointcontrole.questionnaire_id where questionnaire.typeoperation_id ="+ catId +" and inspection_id_mobile = (select activity.table_id from activity where activity.table_name = 'inspection' ) group by questionnaire.categorie_id" ;
+        String sql = "select questionnaire.categorie_id, questionnaire.categorie_nom, ( '[' || ( group_concat ( ('{\"_id\" : \"' || questionnaire.questionnaire_id || '\", \"_description\" : \"' || questionnaire.questionnaire_libelle || '\", \"_is_true\" : \"' || pointcontrole.pointcontrole_conforme || '\", \"_photo\" : \"' || pointcontrole.pointcontrole_photo || '\"}' ) , ',' ) ) || ']' ) as questionnaire from questionnaire inner join pointcontrole on questionnaire.questionnaire_id = pointcontrole.questionnaire_id where questionnaire.typeoperation_id = (select activity.table_id from activity where activity.table_name = 'typeoperation') and pointcontrole.inspection_id_mobile = (select activity.table_id from activity where activity.table_name = 'inspection') group by questionnaire.categorie_id" ;
+        Log.d("getQuestionnaire => ", sql) ;
         Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
         if(cursor.moveToFirst()) {
             do {

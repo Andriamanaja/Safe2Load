@@ -1,5 +1,6 @@
 package com.example.safe2load.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +27,9 @@ import model.object.controle_model;
 
 
 
-public class InspectionFragment extends Fragment {
+public class InspectionFragment extends Fragment implements CLCC_chargement_Fragment.CategorieFragmentListner {
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,6 +50,16 @@ public class InspectionFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("ValidFragment")
+    public InspectionFragment(String questionnaire) throws JSONException {
+        Log.d("qest => " , questionnaire) ;
+        _list_controle_model = new ArrayList<>() ;
+        JSONArray jsonArray = new JSONArray(questionnaire) ;
+        for (int i = 0 ; i < jsonArray.length() ; i++) {
+            _list_controle_model.add(new controle_model((JSONObject) jsonArray.get(i))) ;
+        }
+    }
+
     // TODO: Rename and change types and number of parameters
     public static InspectionFragment newInstance(String param1, String param2) {
         InspectionFragment fragment = new InspectionFragment();
@@ -63,32 +76,16 @@ public class InspectionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-
-
-        Bundle bundle = getArguments() ;
-        _list_controle_model = new ArrayList<>() ;
-        try {
-            JSONArray jsonArray = new JSONArray(bundle.getString("_list_inspection")) ;
-
-            for (int i = 0 ; i < jsonArray.length() ; i++) {
-                _list_controle_model.add(new controle_model((JSONObject) jsonArray.get(i))) ;
-            }
-
-            Log.d("inspection => " , jsonArray.get(0).toString()) ;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_inspection, container, false);
         _recyclerView = view.findViewById(R.id._inspection_recycler_view) ;
         InspectionRecyclerView inspectionRecyclerView = new InspectionRecyclerView(this.getContext()) ;
         inspectionRecyclerView.setItems( _list_controle_model);
+        inspectionRecyclerView.notifyDataSetChanged();
         _recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         _recyclerView.setAdapter(inspectionRecyclerView);
-        Toast.makeText(view.getContext(), "tonga ato inspection fragment", Toast.LENGTH_LONG).show();
+        Log.d("inspection fragment", "ok");
         return view ;
     }
 
@@ -102,13 +99,21 @@ public class InspectionFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.d("inspection fragment", "onAttach");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        Log.d("inspection fragment", "onDetach");
     }
+
+    @Override
+    public void onTracteurChange() {
+        Toast.makeText(view.getContext(), "TEST", Toast.LENGTH_SHORT).show();
+    }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

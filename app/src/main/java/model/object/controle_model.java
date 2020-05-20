@@ -1,6 +1,7 @@
 package model.object;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,11 +11,11 @@ public class controle_model {
     private String _descrption ;
     private boolean _is_true ;
     private String _commentaire ;
-    private Bitmap _image ;
+    private String _image ;
 
 
 
-    public controle_model(int _id, String _descrption, boolean _is_true, String _commentaire, Bitmap _image) {
+    public controle_model(int _id, String _descrption, boolean _is_true, String _commentaire, String _image) {
         this._id = _id;
         this._descrption = _descrption;
         this._is_true = _is_true;
@@ -30,6 +31,7 @@ public class controle_model {
         }else {
             this._is_true = false ;
         }
+        this._image = object.getString("_photo") ;
     }
 
     public controle_model(int _id, String _descrption, boolean _is_true) {
@@ -76,7 +78,7 @@ public class controle_model {
         this._commentaire = _commentaire;
     }
 
-    public void set_image(Bitmap _image) {
+    public void set_image(String _image) {
         this._image = _image;
     }
 
@@ -84,7 +86,7 @@ public class controle_model {
         return _commentaire;
     }
 
-    public Bitmap get_image() {
+    public String get_image() {
         return _image;
     }
 
