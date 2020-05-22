@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.safe2load.R;
 import com.example.safe2load.RecyclerView.InspectionRecyclerView;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,9 +25,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.helper.dao.pointcontrole_dao;
 import model.object.controle_model;
-
-
 
 public class InspectionFragment extends Fragment implements CLCC_chargement_Fragment.CategorieFragmentListner {
 
@@ -37,6 +38,7 @@ public class InspectionFragment extends Fragment implements CLCC_chargement_Frag
 
     private RecyclerView _recyclerView ;
     List<controle_model> _list_controle_model ;
+    List<controle_model> _list_controle_model_temp ;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -47,17 +49,20 @@ public class InspectionFragment extends Fragment implements CLCC_chargement_Frag
     private OnFragmentInteractionListener mListener;
 
     public InspectionFragment() {
-        // Required empty public constructor
     }
 
     @SuppressLint("ValidFragment")
     public InspectionFragment(String questionnaire) throws JSONException {
-        Log.d("qest => " , questionnaire) ;
-        _list_controle_model = new ArrayList<>() ;
+
+        this._list_controle_model = new ArrayList<>() ;
+        this._list_controle_model_temp = new ArrayList<>() ;
         JSONArray jsonArray = new JSONArray(questionnaire) ;
         for (int i = 0 ; i < jsonArray.length() ; i++) {
-            _list_controle_model.add(new controle_model((JSONObject) jsonArray.get(i))) ;
+            JSONObject obj = (JSONObject) jsonArray.get(i) ;
+            this._list_controle_model.add(new controle_model(obj)) ;
+            Log.d("constructeur", obj.toString()) ;
         }
+        _list_controle_model_temp = _list_controle_model ;
     }
 
     // TODO: Rename and change types and number of parameters
@@ -77,15 +82,20 @@ public class InspectionFragment extends Fragment implements CLCC_chargement_Frag
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        for(int i = 0 ; i < this._list_controle_model.size() ; i++) {
+            Log.d("inspection onCreateView", String.valueOf(this._list_controle_model.get(i).get_is_true())) ;
+        }
+        this._list_controle_model = new ArrayList<>() ;
 
         view = inflater.inflate(R.layout.fragment_inspection, container, false);
+        pointcontrole_dao pointcontrole_dao = new pointcontrole_dao(view.getContext()) ;
+        List<controle_model> ct = new ArrayList<>() ;
+        ct = pointcontrole_dao.getAllControleModel() ;
         _recyclerView = view.findViewById(R.id._inspection_recycler_view) ;
-        InspectionRecyclerView inspectionRecyclerView = new InspectionRecyclerView(this.getContext()) ;
-        inspectionRecyclerView.setItems( _list_controle_model);
+        InspectionRecyclerView inspectionRecyclerView = new InspectionRecyclerView(this.getContext(), ct) ;
         inspectionRecyclerView.notifyDataSetChanged();
         _recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         _recyclerView.setAdapter(inspectionRecyclerView);
-        Log.d("inspection fragment", "ok");
         return view ;
     }
 

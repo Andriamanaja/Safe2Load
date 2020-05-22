@@ -47,16 +47,15 @@ import model.object.pointcontrole_model;
 public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyclerView.ViewHolder> implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     Context context ;
-    private List<controle_model> list_controle_model ;
+    List<controle_model> list_controle_model  ;
     View view ;
     InspectionRecyclerView.ViewHolder vh ;
     String comment = "" ;
 
-    public InspectionRecyclerView(Context context) {
+    public InspectionRecyclerView(Context context, List<controle_model> list_controle_model) {
+        for(int i = 0 ; i < list_controle_model.size() ; i++ ) Log.d("recyclerView const", String.valueOf(list_controle_model.get(i).get_is_true())) ;
         this.context = context;
-    }
-
-    public void setItems(List<controle_model> list_controle_model) {
+        this.list_controle_model = new ArrayList<>() ;
         this.list_controle_model = list_controle_model;
     }
 
@@ -77,6 +76,7 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        Log.d("inspection fragment rec", "onCreateViewHolder") ;
         view = LayoutInflater.from(context).inflate(R.layout.item_inspection, viewGroup, false) ;
         ViewHolder viewHolder = new ViewHolder(view) ;
         return viewHolder ;
@@ -84,17 +84,14 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
-
-        Toast.makeText(view.getContext(), "tonga ato inspection recycler", Toast.LENGTH_LONG).show();
-
+        Log.d("recyclerview bind", String.valueOf(list_controle_model.get(i).get_is_true())) ;
         this.vh = viewHolder ;
-        viewHolder._id_doc_potrail.setText(String.valueOf(list_controle_model.get(i).get_id()));
-        viewHolder._desc_doc_portail.setText(list_controle_model.get(i).get_descrption());
-        Log.d("irv => " , list_controle_model.get(i).get_id() + " => " +  String.valueOf(list_controle_model.get(i).is_is_true()));
-        viewHolder._is_actif_doc_portail.setChecked(list_controle_model.get(i).is_is_true());
+        viewHolder._id_doc_potrail.setText(String.valueOf(this.list_controle_model.get(i).get_id()));
+        viewHolder._desc_doc_portail.setText(this.list_controle_model.get(i).get_descrption());
+        viewHolder._is_actif_doc_portail.setChecked(this.list_controle_model.get(i).get_is_true());
 
-        if(list_controle_model.get(i).get_image().equals("") == false) {
-            byte[] bytes = Base64.decode(list_controle_model.get(i).get_image(), Base64.DEFAULT) ;
+        if(this.list_controle_model.get(i).get_image().equals("") == false) {
+            byte[] bytes = Base64.decode(this.list_controle_model.get(i).get_image(), Base64.DEFAULT) ;
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0,bytes.length) ;
             viewHolder._image_doc_portail.setImageBitmap(bitmap);
         }
@@ -131,7 +128,7 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
 
         viewHolder._is_actif_doc_portail.setOnCheckedChangeListener((buttonView, isChecked) -> {
             activity_dao activity_dao = new activity_dao(view.getContext()) ;
-            activity_model activity_model = new activity_model("questionnaire", list_controle_model.get(i).get_id()) ;
+            activity_model activity_model = new activity_model("questionnaire", this.list_controle_model.get(i).get_id()) ;
             if(activity_dao.verify_if_exists("questionnaire").equals(true)) {
                 activity_dao.remove_activity("questionnaire");
             }
@@ -145,6 +142,7 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
             }
         });
 
+        viewHolder._commentaire_doc_portail.setText(list_controle_model.get(i).get_commentaire());
         viewHolder._commentaire_doc_portail.setOnFocusChangeListener((v, hasFocus) -> {
             setActualActivity(i);
             this.comment = vh._commentaire_doc_portail.getText().toString();
@@ -172,7 +170,7 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
 
     public void setActualActivity(int index) {
         activity_dao activity_dao = new activity_dao(view.getContext()) ;
-        activity_model activity_model = new activity_model("questionnaire", list_controle_model.get(index).get_id()) ;
+        activity_model activity_model = new activity_model("questionnaire", this.list_controle_model.get(index).get_id()) ;
         if(activity_dao.verify_if_exists("questionnaire").equals(true)) {
             activity_dao.remove_activity("questionnaire");
         }
@@ -183,7 +181,7 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
         Log.d("152", String.valueOf(index)) ;
 
         pointcontrole_dao pointcontrole_dao = new pointcontrole_dao(view.getContext()) ;
-        pointcontrole_dao.updateCommentaire(comment, list_controle_model.get(index).get_id());
+        pointcontrole_dao.updateCommentaire(comment, this.list_controle_model.get(index).get_id());
     }
 
     public void open_camera() {

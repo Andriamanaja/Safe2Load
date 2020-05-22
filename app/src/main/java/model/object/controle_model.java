@@ -23,6 +23,10 @@ public class controle_model {
         this._image = _image;
     }
 
+    public boolean is_is_true() {
+        return _is_true;
+    }
+
     public controle_model(JSONObject object) throws JSONException {
         this._id = object.getInt("_id") ;
         this._descrption = object.getString("_description") ;
@@ -32,7 +36,10 @@ public class controle_model {
             this._is_true = false ;
         }
         this._image = object.getString("_photo") ;
+        this._commentaire = object.getString("_commentaire") ;
     }
+
+
 
     public controle_model(int _id, String _descrption, boolean _is_true) {
         this._id = _id;
@@ -58,7 +65,7 @@ public class controle_model {
         return _descrption;
     }
 
-    public boolean is_is_true() {
+    public boolean get_is_true() {
         return _is_true;
     }
 

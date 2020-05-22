@@ -19,6 +19,7 @@ import com.example.safe2load.Fragment.CLCC_baremage_Fragment;
 import com.example.safe2load.Fragment.CLCC_chargement_Fragment;
 import com.example.safe2load.Fragment.CLCC_dechargement_Fragment;
 import com.example.safe2load.Fragment.CLCP_Fragment;
+import com.example.safe2load.Fragment.CLWP_Fragment;
 
 import database.helper.dao.activity_dao;
 import database.helper.dao.typeoeration_dao;
@@ -43,6 +44,7 @@ public class OperationFragment extends Fragment {
     CardView bnt_clcc_chargement ;
     CardView bnt__clcc_dechargement ;
     CardView bnt_clcp ;
+    CardView bnt_clwp ;
     CardView bnt_clcc_baremage ;
     OvershootInterpolator interpolator = new OvershootInterpolator() ;
 
@@ -78,16 +80,19 @@ public class OperationFragment extends Fragment {
         bnt__clcc_dechargement = view.findViewById(R.id.bnt__clcc_dechargement);
         bnt_clcc_chargement = view.findViewById(R.id.bnt_clcc_chargement);
         bnt_clcp = view.findViewById(R.id.bnt_clcp);
+        bnt_clwp = view.findViewById(R.id.bnt_clwp);
         bnt_clcc_baremage = view.findViewById(R.id.bnt_clcc_baremage) ;
 
         bnt__clcc_dechargement.setAlpha(0f);
         bnt_clcc_chargement.setAlpha(0f);
         bnt_clcp.setAlpha(0f);
+        bnt_clwp.setAlpha(0f);
         bnt_clcc_baremage.setAlpha(0f);
 
         bnt__clcc_dechargement.setTranslationX(translationY);
         bnt_clcc_chargement.setTranslationX(translationY);
         bnt_clcp.setTranslationX(translationY);
+        bnt_clwp.setTranslationX(translationY);
         bnt_clcc_baremage.setTranslationX(translationY);
 
         floatingActionButton.setOnClickListener(v -> {
@@ -138,6 +143,19 @@ public class OperationFragment extends Fragment {
             }
         });
 
+        bnt_clwp.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
+            try {
+                fragmentManager.beginTransaction().replace(R.id.layout_content, CLWP_Fragment.class.newInstance()).commit() ;
+                getActivity().setTitle("CLWP");
+                add_to_activity("CLWP") ;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
+            }
+        });
+
         bnt_clcc_baremage.setOnClickListener(v -> {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
             try {
@@ -172,6 +190,7 @@ public class OperationFragment extends Fragment {
         bnt__clcc_dechargement.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcc_chargement.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcp.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+        bnt_clwp.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcc_baremage.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         is_open = true ;
     }
@@ -182,6 +201,7 @@ public class OperationFragment extends Fragment {
         bnt__clcc_dechargement.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcc_chargement.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcp.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+        bnt_clwp.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         bnt_clcc_baremage.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
 
         is_open = false ;

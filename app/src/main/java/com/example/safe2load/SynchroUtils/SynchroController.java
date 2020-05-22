@@ -48,13 +48,14 @@ public class SynchroController {
                         }
                     }
                 } catch (JSONException e) {
+                    Toast.makeText(context, "Une erreur s'est produite lors de la synchronisation : " + e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-
+                Toast.makeText(context, "Une erreur s'est produite lors de la synchronisation : " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -77,11 +78,13 @@ public class SynchroController {
                             for(int i = 0 ; i < to_offline.length() ; i++) {
                                 sync_dao sd = new sync_dao(context) ;
                                 sd.generic_insert(to_offline.getJSONObject(i));
+
                             }
                             Toast.makeText(context, "Synchronisation effectuée avec succès", Toast.LENGTH_LONG).show();
                         }
 
                     } catch (JSONException e) {
+                        Toast.makeText(context, "Une erreur s'est produite lors de la synchronisation : " + e.getMessage(),  Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 }
@@ -89,6 +92,7 @@ public class SynchroController {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
+                Toast.makeText(context, "Une erreur s'est produite lors de la synchronisation : " + t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.e("ERROR: ", t.getMessage());
             }
         });

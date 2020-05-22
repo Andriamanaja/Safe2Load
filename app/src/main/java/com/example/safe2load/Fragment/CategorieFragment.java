@@ -118,8 +118,9 @@ public class CategorieFragment extends Fragment {
     public void reloadActivity(TabLayout.Tab tab) {
         activity_dao activity_dao = new activity_dao(view.getContext()) ;
         categorie_dao categorie_dao = new categorie_dao(view.getContext()) ;
-        categorie_model categorie_model = categorie_dao.getCategorieByTableName( tab.getText().toString()) ;
+        categorie_model categorie_model = categorie_dao.getCategorieByCurrentTypeOperation( tab.getText().toString()) ;
         activity_model activity_model = new activity_model("categorie", categorie_model.get_categorie_id()) ;
+        Log.d("categorie tab" , String.valueOf(categorie_model.get_categorie_id())) ;
         activity_dao.update_activity(activity_model, activity_dao.getActivityByTableName("categorie").get_table_id());
     }
 
@@ -140,7 +141,7 @@ public class CategorieFragment extends Fragment {
 
         for(int w = 0 ; w < list.size(); w++) {
            /* Bundle bundle = new Bundle() ;
-            bundle.putString("_list_inspection", list.get(w).getQuestionnaire()) ;*/
+            bundline.putString("_list_inspection", list.get(w).getQuestionnaire()) ;*/
             InspectionFragment inspectionFragment = new InspectionFragment(list.get(w).getQuestionnaire()) ;
            // inspectionFragment.setArguments(bundle);
             viewPagerAdapter.addFrag(inspectionFragment, list.get(w).getCategorie_nom());

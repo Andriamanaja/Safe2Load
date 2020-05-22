@@ -25,12 +25,16 @@ public class sync_dao extends database_helper {
     public void generic_insert(JSONObject object) throws JSONException {
         this.get_table_name(object) ;
         String query = "" ;
+        String query_dfs = "" ;
         if(generate_query_for_verifying(object) == false) {
             query = this.generate_query_insert(object ) ;
         }
         else {
             query = this.generate_query_update(object) ;
+            query_dfs = this.generate_query_update_data_for_sync(object) ;
+            this.getWritableDatabase().execSQL(query_dfs);
         }
+        Log.d("q => ", query) ;
         this.getWritableDatabase().execSQL(query);
         this.getWritableDatabase().close();
 
@@ -47,10 +51,27 @@ public class sync_dao extends database_helper {
         }
     }
 
+    private String generate_query_update_data_for_sync(JSONObject object) throws JSONException {
+        String sqli = "update data_for_sync set is_synced = 1 where data_for_sync.table_name = '" + this.table_name + "' and data_for_sync.table_id = " ;
+        object.remove("table_name") ;
+
+        if(this.table_name.equals("users") == true || this.table_name.equals("groups") == true) {
+            sqli += object.getString( "id") ;
+        }
+        else {
+           sqli += object.getString( this.table_name+"_id");
+        }
+        return sqli ;
+    }
+
     private Boolean generate_query_for_verifying(JSONObject object) throws JSONException {
         String query = "";
 
-        if(this.table_name.equals("users") == true || this.table_name.equals("groups") == true) {
+        if(this.table_name.equals("pointcontrole") == true || this.table_name.equals("inspection") == true) {
+            query = "select * from " + this.table_name + " where  "+  this.table_name +"_id_mobile = " + object.getString( this.table_name+"_id") ;
+            query = "select * from " + this.table_name + " where id = " + object.getString( "id") ;
+        }
+        else if (this.table_name.equals("users") == true || this.table_name.equals("groups") == true) {
             query = "select * from " + this.table_name + " where id = " + object.getString( "id") ;
         }
         else {

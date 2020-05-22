@@ -69,7 +69,7 @@ public class CLCC_chargement_Fragment extends Fragment  {
     }
     CategorieFragmentListner categorieFragmentListner ;
 
-    private List<plannification_model> list_plannification = new ArrayList<>() ;
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -87,16 +87,16 @@ public class CLCC_chargement_Fragment extends Fragment  {
     Spinner spinner_conducteur_clcc_chargement ;
     Spinner spinner_tracteur_clcc_chargement ;
     Spinner spinner_citerne_clcc_chargement ;
-    TextView date_chargement ;
-    TextView heure_chargement ;
-    TextView depot_chargement ;
-    TextView durée_chargement ;
-    Button save_inspection ;
-    CategorieFragment categorieFragment ;
+    TextView date_clcc_chargement ;
+    TextView heure_clcc_chargement ;
+    TextView depot_clcc_chargement ;
+    TextView durée_clcc_chargement ;
+    Button save_clcc_inspection ;
     int current_inspection_id = 0 ;
-    InspectionRecyclerView adpter ;
+    private List<plannification_model> list_plannification = new ArrayList<>() ;
 
     private OnFragmentInteractionListener mListener;
+    CategorieFragment categorieFragment ;
 
     public CLCC_chargement_Fragment() {
         // Required empty public constructor
@@ -118,19 +118,13 @@ public class CLCC_chargement_Fragment extends Fragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         view = inflater.inflate(R.layout.fragment_clcc_chargement_, container, false);
         this.loadViews();
-
         try {
             this.fillDataToAllSpinner();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-
         return view ;
     }
 
@@ -139,12 +133,10 @@ public class CLCC_chargement_Fragment extends Fragment  {
         spinner_conducteur_clcc_chargement = view.findViewById(R.id.spinner_conducteur_clcc_chargement) ;
         spinner_transporteur_clcc_chargement = view.findViewById(R.id.spinner_transporteur_clcc_chargement) ;
         spinner_citerne_clcc_chargement = view.findViewById(R.id.spinner_citerne_clcc_chargement) ;
-        save_inspection = view.findViewById(R.id.save_inspection) ;
-        date_chargement = view.findViewById(R.id.date_chargement) ;
-        heure_chargement = view.findViewById(R.id.heure_chargement) ;
-        depot_chargement = view.findViewById(R.id.depot_chargement) ;
-
-
+        save_clcc_inspection = view.findViewById(R.id.save_clcc_inspection) ;
+        date_clcc_chargement = view.findViewById(R.id.date_clcc_chargement) ;
+        heure_clcc_chargement = view.findViewById(R.id.heure_clcc_chargement) ;
+        depot_clcc_chargement = view.findViewById(R.id.depot_clcc_chargement) ;
     }
 
     public void fillDataToAllSpinner () throws ParseException {
@@ -170,7 +162,7 @@ public class CLCC_chargement_Fragment extends Fragment  {
 
                 depot_dao depot_dao = new depot_dao(view.getContext()) ;
                 depot_model depot_model = depot_dao.getDepotById(list_plannification.get(position).get_depot_id()) ;
-                depot_chargement.setText(depot_model.getDepot_nom());
+                depot_clcc_chargement.setText(depot_model.getDepot_nom());
 
                 pointcontrole_dao pointcontrole_dao = new pointcontrole_dao(view.getContext()) ;
                 plannification_model my_plannification = list_plannification.get(position) ;
@@ -262,8 +254,8 @@ public class CLCC_chargement_Fragment extends Fragment  {
 
                 inspection_dao inspection_dao = new inspection_dao(view.getContext()) ;
                 inspection_model info = inspection_dao.getInspectionInfo(current_inspection_id) ;
-                date_chargement.setText(info.getInspection_datevisite());
-                heure_chargement.setText(info.getInspection_heuredebut());
+                date_clcc_chargement.setText(info.getInspection_datevisite());
+                heure_clcc_chargement.setText(info.getInspection_heuredebut());
             }
 
             @Override
@@ -301,7 +293,7 @@ public class CLCC_chargement_Fragment extends Fragment  {
 
 
         //SAVE INSPECTION
-        save_inspection.setOnClickListener(v -> {
+        save_clcc_inspection.setOnClickListener(v -> {
             inspection_dao inspection_dao = new inspection_dao(view.getContext()) ;
             inspection_dao.cloturerInspection();
             Toast.makeText(view.getContext(), "Inpection clôturée avec succès", Toast.LENGTH_LONG).show();
@@ -340,12 +332,6 @@ public class CLCC_chargement_Fragment extends Fragment  {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-      /*  if(context instanceof CategorieFragmentListner) {
-            categorieFragmentListner = (CategorieFragmentListner) view.getContext() ;
-        }
-        else {
-            throw new RuntimeException(context.toString() + "kititseee..................") ;
-        } */
     }
 
     @Override

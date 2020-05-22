@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.helper.database_helper;
+import model.object.controle_model;
 import model.object.data_for_sync_model;
 import model.object.pointcontrole_model;
 
@@ -85,6 +86,36 @@ public class pointcontrole_dao extends database_helper {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public List<controle_model> getAllControleModel() {
+        String sql = "select pointcontrole.questionnaire_id as _id , pointcontrole.pointcontrole_commentaire as _commentaire ,\n" +
+                "pointcontrole.pointcontrole_photo as _image , pointcontrole.pointcontrole_conforme as _is_true ,\n" +
+                "questionnaire.questionnaire_libelle as _description, questionnaire.categorie_id from pointcontrole \n" +
+                "inner join questionnaire on questionnaire.questionnaire_id = pointcontrole.questionnaire_id\n" +
+                "where pointcontrole.inspection_id_mobile = (select activity.table_id from activity where activity.table_name = 'inspection')\n" +
+                "and questionnaire.categorie_id = (select activity.table_id from activity where activity.table_name = 'categorie')" ;
+        List<controle_model> list = new ArrayList<>() ;
+        Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
+        if(cursor.moveToFirst()) {
+            do {
+                int _id = Integer.valueOf(cursor.getString(cursor.getColumnIndex("_id"))) ;
+                String _description = cursor.getString(cursor.getColumnIndex("_description")) ;
+                boolean _is_true = false ;
+                int it = Integer.valueOf(cursor.getString(cursor.getColumnIndex("_is_true"))) ;
+                if(it == 1) {
+                    _is_true = true ;
+                }
+                else {
+                    _is_true = false ;
+                }
+                String commentaire = cursor.getString(cursor.getColumnIndex("_commentaire")) ;
+                String _image = cursor.getString(cursor.getColumnIndex("_image")) ;
+                controle_model controle_model = new controle_model(_id, _description,_is_true, commentaire, _image) ;
+                list.add(controle_model) ;
+            }while (cursor.moveToNext()) ;
+        }
+        return list ;
     }
 
 }

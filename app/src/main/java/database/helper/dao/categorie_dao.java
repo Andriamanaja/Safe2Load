@@ -50,4 +50,21 @@ public class categorie_dao extends database_helper {
         cursor.close();
         return categorie_model ;
     }
+
+    public categorie_model getCategorieByCurrentTypeOperation(String name) {
+        categorie_model categorie_model = new categorie_model() ;
+        String sql = "select * from categorie where typeoperation_id = (select table_id from activity where table_name = 'typeoperation' ) and categorie_nom = '" + name + "' "  ;
+        Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
+        if(cursor.moveToFirst()) {
+            do {
+                categorie_model.set_categorie_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex("categorie_id"))));
+                categorie_model.setCategorie_nom(cursor.getString(cursor.getColumnIndex("categorie_nom")));
+                categorie_model.setTypeoperation_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex("typeoperation_id"))));
+                categorie_model.setTypeoperation_nom(cursor.getString(cursor.getColumnIndex("typeoperation_nom")));
+                categorie_model.setTypeoperation_class(cursor.getString(cursor.getColumnIndex("typeoperation_class")));
+            } while (cursor.moveToNext()) ;
+        }
+        cursor.close();
+        return categorie_model ;
+    }
 }
