@@ -16,8 +16,6 @@ import com.example.safe2load.Fragment.CLCC_chargement_Fragment;
 import com.example.safe2load.Fragment.CLCC_dechargement_Fragment;
 import com.example.safe2load.Fragment.CLCP_Fragment;
 import com.example.safe2load.Fragment.CLWP_Fragment;
-import com.example.safe2load.Fragment.CLWR_Fragment;
-import com.example.safe2load.Fragment.CLWP_Fragment;
 
 import database.helper.dao.activity_dao;
 import database.helper.dao.typeoeration_dao;
@@ -38,22 +36,17 @@ public class OperationFragment extends Fragment {
     View view ;
     ConstraintLayout content_operation ;
 
-//    FloatingActionButton floatingActionButton ;
+    //    FloatingActionButton floatingActionButton ;
     CardView bnt_clcc_chargement ;
     CardView bnt__clcc_dechargement ;
     CardView bnt_clcp ;
-    CardView bnt_clwp ;
     CardView bnt_clcc_baremage ;
     CardView btn_clwp;
 //    OvershootInterpolator interpolator = new OvershootInterpolator() ;
 
 
 
-    Context operation_context ;
 
-    float translationY = 100f;
-
-    boolean is_open = false ;
 
     private OnFragmentInteractionListener mListener;
 
@@ -81,7 +74,7 @@ public class OperationFragment extends Fragment {
         bnt__clcc_dechargement = view.findViewById(R.id.bnt_clcc_dechargement);
         bnt_clcc_chargement = view.findViewById(R.id.bnt__clcc_chargement);
         bnt_clcp = view.findViewById(R.id.bnt_clcp);
-        bnt_clwp = view.findViewById(R.id.bnt_clwp);
+        btn_clwp = view.findViewById(R.id.bnt_clwp);
         bnt_clcc_baremage = view.findViewById(R.id.bnt_clcc_baremage) ;
 
         /*bnt__clcc_dechargement.setAlpha(0f);
@@ -138,19 +131,6 @@ public class OperationFragment extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.layout_content, CLCP_Fragment.class.newInstance()).commit();
                 getActivity().setTitle("CLCP");
                 add_to_activity("CLCP");
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (java.lang.InstantiationException e) {
-                e.printStackTrace();
-            }
-        });
-
-        bnt_clwp.setOnClickListener(v -> {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
-            try {
-                fragmentManager.beginTransaction().replace(R.id.layout_content, CLWP_Fragment.class.newInstance()).commit() ;
-                getActivity().setTitle("CLWP");
-                add_to_activity("CLWP") ;
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {

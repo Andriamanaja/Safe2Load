@@ -10,10 +10,6 @@
     tools:showIn="@layout/activity_menu2">
 
 
-    <include
-        layout="@layout/fragment_operation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <include
         layout="@layout/activity_side_menu"
