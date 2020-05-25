@@ -206,6 +206,7 @@ public class InspectionRecyclerView extends RecyclerView.Adapter<InspectionRecyc
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        //private LinearLayout
         private TextView _id_doc_potrail ;
         private TextView _desc_doc_portail ;
         private Switch _is_actif_doc_portail ;

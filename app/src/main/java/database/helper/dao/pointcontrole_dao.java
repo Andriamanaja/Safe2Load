@@ -88,6 +88,32 @@ public class pointcontrole_dao extends database_helper {
         }
     }
 
+    public List<controle_model> getDataForDetail(int cat_id) {
+        String sql = "select pointcontrole.questionnaire_id as _id , pointcontrole.pointcontrole_commentaire as _commentaire , pointcontrole.pointcontrole_photo as _image , pointcontrole.pointcontrole_conforme as _is_true , questionnaire.questionnaire_libelle as _description, questionnaire.categorie_id from pointcontrole inner join questionnaire on questionnaire.questionnaire_id = pointcontrole.questionnaire_id where pointcontrole.inspection_id_mobile = (select activity.table_id from activity where activity.table_name = 'inspection') and questionnaire.categorie_id = " + cat_id + "";
+        Log.d("getDataForDetail", sql) ;
+        List<controle_model> list = new ArrayList<>() ;
+        Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
+        if(cursor.moveToFirst()) {
+            do {
+                int _id = Integer.valueOf(cursor.getString(cursor.getColumnIndex("_id"))) ;
+                String _description = cursor.getString(cursor.getColumnIndex("_description")) ;
+                boolean _is_true = false ;
+                int it = Integer.valueOf(cursor.getString(cursor.getColumnIndex("_is_true"))) ;
+                if(it == 1) {
+                    _is_true = true ;
+                }
+                else {
+                    _is_true = false ;
+                }
+                String commentaire = cursor.getString(cursor.getColumnIndex("_commentaire")) ;
+                String _image = cursor.getString(cursor.getColumnIndex("_image")) ;
+                controle_model controle_model = new controle_model(_id, _description,_is_true, commentaire, _image) ;
+                list.add(controle_model) ;
+            }while (cursor.moveToNext()) ;
+        }
+        return list ;
+    }
+
     public List<controle_model> getAllControleModel() {
         String sql = "select pointcontrole.questionnaire_id as _id , pointcontrole.pointcontrole_commentaire as _commentaire ,\n" +
                 "pointcontrole.pointcontrole_photo as _image , pointcontrole.pointcontrole_conforme as _is_true ,\n" +

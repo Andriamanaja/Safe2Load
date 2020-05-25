@@ -20,6 +20,8 @@
         android:layout_gravity="start"
         android:background="@color/colorPrimary"
         app:menu="@menu/menu_drawer"
+        app:itemIconTint="@color/black_text"
+        app:itemTextColor="@color/black_text"
         >
 
     </android.support.design.widget.NavigationView>

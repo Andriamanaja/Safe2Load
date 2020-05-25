@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.example.safe2load.RecyclerView.RecyclerViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.helper.dao.inspection_dao;
 import model.object.stat_operation;
 
 public class StatFragment extends Fragment {
@@ -60,31 +62,15 @@ public class StatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _list_stat_operation = new ArrayList<>() ;
-        _list_stat_operation.add(new stat_operation(1, "CLCC-DECHARGEMENT", "RABEMANJAFY  Désiré" , "5896 TBA", "4h10min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(2, "CLCC-LIVRAISON", "RAKOTO Jean" , "0132 TBB", "9h11min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(3, "CLWR", "ALAIN Bernad" , "7413 TBC", "12h30min00s", "17/04/2020" , "Conforme")) ;
-        _list_stat_operation.add(new stat_operation(4, "CLCC-DECHARGEMENT", "RABEMANJAFY  Désiré" , "5896 TBA", "4h10min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(5, "CLCC-LIVRAISON", "RAKOTO Jean" , "0132 TBB", "9h11min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(6, "CLWR", "ALAIN Bernad" , "7413 TBC", "12h30min00s", "17/04/2020" , "Conforme")) ;
-        _list_stat_operation.add(new stat_operation(7, "CLCC-DECHARGEMENT", "RABEMANJAFY  Désiré" , "5896 TBA", "4h10min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(8, "CLCC-LIVRAISON", "RAKOTO Jean" , "0132 TBB", "9h11min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(9, "CLWR", "ALAIN Bernad" , "7413 TBC", "12h30min00s", "17/04/2020" , "Conforme")) ;
-        _list_stat_operation.add(new stat_operation(10, "CLCC-DECHARGEMENT", "RABEMANJAFY  Désiré" , "5896 TBA", "4h10min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(12, "CLCC-LIVRAISON", "RAKOTO Jean" , "0132 TBB", "9h11min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(13, "CLWR", "ALAIN Bernad" , "7413 TBC", "12h30min00s", "17/04/2020" , "Conforme")) ;
-        _list_stat_operation.add(new stat_operation(14, "CLCC-DECHARGEMENT", "RABEMANJAFY  Désiré" , "5896 TBA", "4h10min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(15, "CLCC-LIVRAISON", "RAKOTO Jean" , "0132 TBB", "9h11min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(16, "CLWR", "ALAIN Bernad" , "7413 TBC", "12h30min00s", "17/04/2020" , "Conforme")) ;
-        _list_stat_operation.add(new stat_operation(17, "CLCC-DECHARGEMENT", "RABEMANJAFY  Désiré" , "5896 TBA", "4h10min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(18, "CLCC-LIVRAISON", "RAKOTO Jean" , "0132 TBB", "9h11min00s", "17/04/2020" , "Non conforme")) ;
-        _list_stat_operation.add(new stat_operation(19, "CLWR", "ALAIN Bernad" , "7413 TBC", "12h30min00s", "17/04/2020" , "Non conforme")) ;
     }
 
     @SuppressLint("ResourceType")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_stat, container, false) ;
+        _list_stat_operation = new ArrayList<>() ;
+        inspection_dao inspection_dao = new inspection_dao(view.getContext()) ;
+        _list_stat_operation = inspection_dao.getAllStatOperation() ;
         _recyclerView = view.findViewById(R.id.recycler_stat_op) ;
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this.getContext() , _list_stat_operation) ;
         _recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));

@@ -220,7 +220,6 @@ public class CLCC_chargement_Fragment extends Fragment  {
                     }
                 }
                 else {
-
                     current_inspection_id = vehiculeinspection_dao.getInspectionId(my_plannification.get_vehicule_id()) ;
                     activity_model activity_model = new activity_model("inspection", current_inspection_id) ;
                     activity_dao activity_dao = new activity_dao(view.getContext()) ;

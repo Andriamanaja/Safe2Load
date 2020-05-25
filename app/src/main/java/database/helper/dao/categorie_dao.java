@@ -2,6 +2,7 @@ package database.helper.dao;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,26 @@ public class categorie_dao extends database_helper {
     public List<categorie_model> getAllCategorieByTypeOperationId(int typeoperationid) {
         List<categorie_model> list_categorie_model = new ArrayList<categorie_model>() ;
         String sql = "select * from categorie where typeoperation_id = " + typeoperationid ;
+        Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
+        if(cursor.moveToFirst()) {
+            do {
+                categorie_model categorie_model = new categorie_model() ;
+                categorie_model.set_categorie_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex("categorie_id"))));
+                categorie_model.setCategorie_nom(cursor.getString(cursor.getColumnIndex("categorie_nom")));
+                categorie_model.setTypeoperation_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex("typeoperation_id"))));
+                categorie_model.setTypeoperation_nom(cursor.getString(cursor.getColumnIndex("typeoperation_nom")));
+                categorie_model.setTypeoperation_class(cursor.getString(cursor.getColumnIndex("typeoperation_class")));
+                list_categorie_model.add(categorie_model) ;
+            } while (cursor.moveToNext()) ;
+        }
+        cursor.close();
+        return list_categorie_model ;
+    }
+
+    public List<categorie_model> getAllCategorieByTypeOperationIdFromActivity() {
+        Log.d("makato pory", "sjd") ;
+        List<categorie_model> list_categorie_model = new ArrayList<categorie_model>() ;
+        String sql = "select * from categorie where typeoperation_id = (select inspection.typeoperation_id from inspection where inspection.inspection_id_mobile = (select activity.table_id from activity where activity.table_name = 'inspection'))" ;
         Cursor cursor = this.getReadableDatabase().rawQuery(sql, null) ;
         if(cursor.moveToFirst()) {
             do {

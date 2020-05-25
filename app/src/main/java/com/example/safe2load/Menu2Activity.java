@@ -33,6 +33,9 @@ public class Menu2Activity extends AppCompatActivity {
     private Toast toast ;
     Class saved_class ;
 
+    Fragment fragment = null ;
+    Class fragment_class = HomeFragment.class;
+
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +70,7 @@ public class Menu2Activity extends AppCompatActivity {
     }
 
     public void selectItemDrawer(MenuItem item) {
-        Fragment fragment = null ;
-        Class fragment_class = null;
+
         switch (item.getItemId()) {
             case R.id.home : fragment_class = HomeFragment.class; break;
             case R.id.operation : fragment_class = OperationFragment.class ; break;
@@ -107,7 +109,7 @@ public class Menu2Activity extends AppCompatActivity {
 
     private void setupDrawerContext(NavigationView navigationView){
         navigationView.setNavigationItemSelectedListener(menuItem -> {
-            selectItemDrawer(menuItem );
+            selectItemDrawer(menuItem);
             return true;
         });
     }
@@ -124,7 +126,7 @@ public class Menu2Activity extends AppCompatActivity {
         if(resultCode == RESULT_OK) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data") ;
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream() ;
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream) ;
+            bitmap.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream) ;
             byte[] bytes = byteArrayOutputStream.toByteArray() ;
             String encoded_image = Base64.encodeToString(bytes, Base64.DEFAULT) ;
             pointcontrole_dao pointcontrole_dao = new pointcontrole_dao(this) ;

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/dat_cont"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/detail_id_quest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/detail_nom_quest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kfbfbvioshdfishdfiuhsfh"/>
+
+        <TextView
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Commentaire"/>
+
+        <TextView
+            android:id="@+id/detail_comm_quest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="liufhzehfziuhfz"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|center_vertical">
+
+        <ImageView
+            android:id="@+id/detail_conf_quest"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <Button
+            android:id="@+id/detail_show_image"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:textSize="10dp"
+            android:text="Voir la photo"/>
+
+    </LinearLayout>
+
+</LinearLayout>

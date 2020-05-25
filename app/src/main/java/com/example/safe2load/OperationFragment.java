@@ -76,14 +76,14 @@ public class OperationFragment extends Fragment {
     }
 
     private void init_view() {
-        floatingActionButton = view.findViewById(R.id.floating_btn_operation);
-        bnt__clcc_dechargement = view.findViewById(R.id.bnt__clcc_dechargement);
-        bnt_clcc_chargement = view.findViewById(R.id.bnt_clcc_chargement);
+      //  floatingActionButton = view.findViewById(R.id.floating_btn_operation);
+        bnt__clcc_dechargement = view.findViewById(R.id.bnt_clcc_dechargement);
+        bnt_clcc_chargement = view.findViewById(R.id.bnt__clcc_chargement);
         bnt_clcp = view.findViewById(R.id.bnt_clcp);
         bnt_clwp = view.findViewById(R.id.bnt_clwp);
         bnt_clcc_baremage = view.findViewById(R.id.bnt_clcc_baremage) ;
 
-        bnt__clcc_dechargement.setAlpha(0f);
+        /*bnt__clcc_dechargement.setAlpha(0f);
         bnt_clcc_chargement.setAlpha(0f);
         bnt_clcp.setAlpha(0f);
         bnt_clwp.setAlpha(0f);
@@ -93,16 +93,16 @@ public class OperationFragment extends Fragment {
         bnt_clcc_chargement.setTranslationX(translationY);
         bnt_clcp.setTranslationX(translationY);
         bnt_clwp.setTranslationX(translationY);
-        bnt_clcc_baremage.setTranslationX(translationY);
+        bnt_clcc_baremage.setTranslationX(translationY);*/
 
-        floatingActionButton.setOnClickListener(v -> {
+        /*floatingActionButton.setOnClickListener(v -> {
             if(is_open == false) {
                 open_menu();
             }
             else {
                 close_menu();
             }
-        });
+        });*/
 
         bnt__clcc_dechargement.setOnClickListener(v -> {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager() ;
@@ -181,7 +181,7 @@ public class OperationFragment extends Fragment {
         activity_dao.create_activity(activity_model1);
     }
 
-    @SuppressLint("ResourceAsColor")
+   /* @SuppressLint("ResourceAsColor")
     public void open_menu() {
 
         floatingActionButton.setBackgroundColor(R.color.colorSecondaryDark);
@@ -205,7 +205,7 @@ public class OperationFragment extends Fragment {
         bnt_clcc_baremage.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
 
         is_open = false ;
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

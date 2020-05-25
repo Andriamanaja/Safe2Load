@@ -68,8 +68,7 @@ public class sync_dao extends database_helper {
         String query = "";
 
         if(this.table_name.equals("pointcontrole") == true || this.table_name.equals("inspection") == true) {
-            query = "select * from " + this.table_name + " where  "+  this.table_name +"_id_mobile = " + object.getString( this.table_name+"_id") ;
-            query = "select * from " + this.table_name + " where id = " + object.getString( "id") ;
+            query = "select * from " + this.table_name + " where  "+  this.table_name +"_id_mobile = " + object.getString( this.table_name+"_id_mobile") ;
         }
         else if (this.table_name.equals("users") == true || this.table_name.equals("groups") == true) {
             query = "select * from " + this.table_name + " where id = " + object.getString( "id") ;

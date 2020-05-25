@@ -100,17 +100,15 @@ public class CategorieFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                reloadActivity(tab) ;
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                reloadActivity(tab) ;
+
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                reloadActivity(tab) ;
             }
         });
     }
