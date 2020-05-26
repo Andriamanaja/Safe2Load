@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -13,8 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import database.helper.dao.data_for_sync_dao;
 import database.helper.dao.sync_dao;
+import database.helper.dao.users_dao;
+import model.object.users_model;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,4 +97,38 @@ public class SynchroController {
             }
         });
     }
+public void UsersFromOneline(RequestBody Object){
+
+    Call<Object> call_ = synchroService.getUsers();
+    call_.enqueue(new Callback<Object>(){
+
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        @Override
+        public void onResponse(Call<java.lang.Object> call, Response<java.lang.Object> response) {
+
+            try {
+                Gson gson = new Gson() ;
+                JSONObject result = new JSONObject(gson.toJson(response.body()));
+                JSONObject user_id = result.getJSONObject("user_id") ;
+                String new_password = result.getString("new_password");
+                users_model users_model = new users_model(user_id);
+                users_dao  users_dao = new users_dao(context);
+                users_dao.UpdateUser(users_model, new_password);
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<java.lang.Object> call, Throwable t) {
+
+        }
+    });
+
+
+}
+
 }

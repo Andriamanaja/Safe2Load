@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1093759219",
+    "firebase_url": "https://safetoload-a176b.firebaseio.com",
+    "project_id": "safetoload-a176b",
+    "storage_bucket": "safetoload-a176b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093759219:android:96cb3f8feab51944dcc786",
+        "android_client_info": {
+          "package_name": "com.example.safe2load"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093759219-lddu4lp46dutk7fsi01p3lk0sj7p41pr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqUyv2TTEEyl8BF2oif42hzNAAwXX2cT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093759219-lddu4lp46dutk7fsi01p3lk0sj7p41pr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

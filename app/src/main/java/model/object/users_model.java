@@ -1,5 +1,8 @@
 package model.object;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class users_model {
     private int id;
     private int filiale_id;
@@ -27,6 +30,21 @@ public class users_model {
     public users_model(String password, String email) {
         this.password = password;
         this.email = email;
+    }
+
+    public users_model(JSONObject object) throws JSONException {
+        this.id = object.getInt("id");
+//        this.filiale_id = object.getInt("filiale_id");
+  //      this.depot_id = object.getInt("depot_id");
+        this.ip_address = object.getString("ip_address");
+        this.username = object.getString("username");
+        this.password = object.getString("password");
+        this.email = object.getString("email");
+        this.activation_code = object.getString("activation_code");
+    //    this.activation_selector = object.getString("activation_selector");
+     //   this.forgotten_password_code = object.getString("forgotten_password_code");
+      //  this.forgotten_password_selector = object.getString("forgotten_password_selector");
+
     }
 
 

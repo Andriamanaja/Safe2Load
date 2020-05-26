@@ -54,7 +54,7 @@
             android:textSize="20dp" />
 
 
-        <TextView
+      <!--  <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -98,7 +98,7 @@
             android:inputType="textPassword"
             android:padding="5dp"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="20dp" />-->
 
         <Button
             android:layout_width="match_parent"

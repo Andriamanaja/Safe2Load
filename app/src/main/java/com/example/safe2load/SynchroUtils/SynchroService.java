@@ -1,9 +1,5 @@
 package com.example.safe2load.SynchroUtils;
 
-import org.json.JSONObject;
-
-import java.util.List;
-
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,6 +12,9 @@ public interface SynchroService {
     @POST("get_all_data/")
     Call<Object> getAllData(@Body RequestBody object) ;
 
-    @POST("get_all_utilisateur")
+    @POST("get_all_utilisateur/")
     Call<Object> getAllUsers() ;
+
+    @POST("get_reset_password/")
+    Call<Object> getUsers();
 }

@@ -15,14 +15,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".DetailActivity"></activity>
-        android:theme="@style/AppTheme">
-        <activity android:name=".MotDePasseOublieActivity"></activity>
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".ViewPagerAdapter.detail_activity"></activity>
-
         <activity
             android:name=".Menu2Activity"
+            android:label="@string/title_activity_menu2"
+            android:theme="@style/FullscreenTheme2" />
+        <activity
+            android:name=".MotDePasseOublieActivity"
             android:label="@string/title_activity_menu2"
             android:theme="@style/FullscreenTheme2" />
         <activity
