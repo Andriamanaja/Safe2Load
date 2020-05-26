@@ -80,10 +80,10 @@ public class MotDePasseOublieActivity extends AppCompatActivity {
                     cmdpEditText.getText().toString().trim().length() == 0) {
 
 
-                showMessage("Error", "Please enter Email/The new password");
+                showMessage("Error", "Vérifier l'adresse Email/le Nouveau mot de passe");
             }
             else if (!mdp.matches(cmdp)) {
-                Toast.makeText(MotDePasseOublieActivity.this, "Password doesn't matched!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MotDePasseOublieActivity.this, "Le mot de passe saisie n'est pas valide !", Toast.LENGTH_SHORT).show();
             }
             else {
                 Intent i = new Intent(MotDePasseOublieActivity.this, MainActivity.class);
