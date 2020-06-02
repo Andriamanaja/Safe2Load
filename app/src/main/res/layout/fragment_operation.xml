@@ -203,12 +203,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment">
+    tools:context=".OperationFragment"
+    android:background="#cccc">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#fff"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
 
 
         <LinearLayout
@@ -220,13 +225,13 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/bnt__clcc_chargement"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="10dp"
-                android:background="#00FFFFFF"
-                app:cardBackgroundColor="#00FFFFFF"
+                android:background="@color/colorPrimaryDark"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
                 android:layout_alignParentRight="true">
 
                 <LinearLayout
@@ -237,27 +242,27 @@
                     android:gravity="center">
 
                     <TextView
-                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:gravity="center_horizontal"
                         android:text="CLCC Chargement"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:gravity="center_horizontal" />
+                        android:textAlignment="center"
+                        android:textColor="#fff"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/bnt_clcc_dechargement"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:background="#D72420"
-                app:cardBackgroundColor="#00FFFFFF"
+                app:cardBackgroundColor="#D72420"
                 android:layout_alignParentRight="true">
 
                 <LinearLayout
@@ -268,16 +273,16 @@
                     android:gravity="center">
 
                     <TextView
-                        android:textAlignment="center"
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#D72420"
+                        android:gravity="center_horizontal"
                         android:text="CLCC déchargement"
-                        android:gravity="center_horizontal" />
+                        android:textAlignment="center"
+                        android:textColor="#fff"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -292,8 +297,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/bnt_clcc_baremage"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="10dp"
@@ -304,7 +309,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
+                    android:background="#FF4CAF50"
                     android:orientation="horizontal"
                     android:gravity="center">
 
@@ -315,17 +320,17 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="CLCC Barémage"
-                        android:textSize="15dp"
+                        android:textSize="20dp"
                         android:textStyle="bold"
-                        android:textColor="#FF4CAF50"
+                        android:textColor="#FFF"
                         android:gravity="center_horizontal" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/bnt_clwp"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
@@ -336,21 +341,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
+                    android:background="#FF5722"
                     android:orientation="horizontal"
                     android:gravity="center">
 
 
                     <TextView
-                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#FF5722"
+                        android:gravity="center_horizontal"
                         android:text="CLWP"
-                        android:gravity="center_horizontal" />
+                        android:textAlignment="center"
+                        android:textColor="#FFF"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -366,7 +371,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/bnt_clcp"
                 android:layout_width="175dp"
-                android:layout_height="75dp"
+                android:layout_height="100dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="10dp"
@@ -377,7 +382,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
+                    android:background="#FF9C27B0"
                     android:orientation="horizontal"
                     android:gravity="center">
 
@@ -388,9 +393,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="CLCP"
-                        android:textSize="15dp"
+                        android:textSize="20dp"
                         android:textStyle="bold"
-                        android:textColor="#FF9C27B0"
+                        android:textColor="#FFF"
                         android:gravity="center_horizontal" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>

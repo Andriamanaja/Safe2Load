@@ -1,226 +1,486 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#cccc"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center|center_vertical">
+            android:orientation="vertical"
+            android:background="#fff"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/acc_operation"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="10dp"
-                android:background="#00FFFFFF"
-                app:cardBackgroundColor="#00FFFFFF"
-                android:layout_alignParentRight="true">
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|center_vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/acc_operation"
+                    android:layout_width="125dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="20dp"
                     android:background="#00FFFFFF"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    app:cardBackgroundColor="#00FFFFFF">
 
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_operation"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimaryDark"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:textAlignment="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="Opération"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorPrimaryDark" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#ffff"
+                            app:srcCompat="@drawable/ic_operation" />
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/acc_stat"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:background="#D72420"
-                app:cardBackgroundColor="#00FFFFFF"
-                android:layout_alignParentRight="true">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="30dp"
+                            android:gravity="center_horizontal"
+                            android:text="Opérations"
+                            android:textAlignment="center"
+                            android:textColor="#ffff"
+                            android:textSize="17dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
+                    android:id="@+id/acc_stat"
+                    android:layout_width="126dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="#D72420"
+                    app:cardBackgroundColor="#00FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#D72420"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#fff"
+                            app:srcCompat="@drawable/ic_stat" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="17dp"
+                            android:gravity="center_horizontal"
+                            android:text="Statistique des opérations"
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="17dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|center_vertical">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/acc_sync"
+                    android:layout_width="125dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="20dp"
+                    android:background="#00FFFFFF"
+                    app:cardBackgroundColor="#00FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FF4CAF50"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#fff"
+                            app:srcCompat="@drawable/ic_sync" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="30dp"
+                            android:gravity="center_horizontal"
+                            android:text="Synchronisation"
+                            android:textAlignment="center"
+                            android:textColor="#FFF"
+                            android:textSize="17dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/acc_params"
+                    android:layout_width="125dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="#D72420"
+                    app:cardBackgroundColor="#00FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FF5722"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#FFF"
+                            app:srcCompat="@drawable/ic_setting" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="30dp"
+                            android:gravity="center_horizontal"
+                            android:text="Paramètres"
+                            android:textAlignment="center"
+                            android:textColor="#FFF"
+                            android:textSize="17dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|center_vertical">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/acc_dsc"
+                    android:layout_width="125dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#00FFFFFF"
+                    app:cardBackgroundColor="#00FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FF9C27B0"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#FFF"
+                            app:srcCompat="@drawable/ic_exit" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="50dp"
+                            android:text="Déconnection"
+                            android:textColor="#FFF"
+                            android:textSize="17dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="0dp"
+
+
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#00FFFFFF"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    app:srcCompat="@drawable/ic_stat"/>
-
-                    <TextView
-                        android:textAlignment="center"
-                        android:id="@+id/textView6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#D72420"
-                        android:text="Statistique des opérations"
-                         />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center|center_vertical">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/acc_sync"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="10dp"
-                android:background="#00FFFFFF"
-                app:cardBackgroundColor="#00FFFFFF"
-                android:layout_alignParentRight="true">
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center|center_vertical">
 
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_sync"/>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/acc_operation"
+                        android:layout_width="175dp"
+                        android:layout_height="75dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="10dp"
+                        android:background="#00FFFFFF"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        android:layout_alignParentRight="true">
 
-                    <TextView
-                        android:textAlignment="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="Synchronisation"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#FF4CAF50" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#00FFFFFF"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_centerInParent="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_operation"/>
+
+                            <TextView
+                                android:textAlignment="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="Opération"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimaryDark" />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/acc_stat"
+                        android:layout_width="175dp"
+                        android:layout_height="75dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="#D72420"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        android:layout_alignParentRight="true">
+
+                        <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#00FFFFFF"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_centerInParent="true"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:srcCompat="@drawable/ic_stat"/>
+
+                            <TextView
+                                android:textAlignment="center"
+                                android:id="@+id/textView6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:textColor="#D72420"
+                                android:text="Statistique des opérations"
+                                 />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/acc_params"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:background="#D72420"
-                app:cardBackgroundColor="#00FFFFFF"
-                android:layout_alignParentRight="true">
 
                 <LinearLayout
+                    android:layout_marginTop="25dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center|center_vertical">
 
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:srcCompat="@drawable/ic_setting"/>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/acc_sync"
+                        android:layout_width="175dp"
+                        android:layout_height="75dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="10dp"
+                        android:background="#00FFFFFF"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        android:layout_alignParentRight="true">
 
-                    <TextView
-                        android:textAlignment="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#FF5722"
-                        android:text="Paramètres"
-                        />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#00FFFFFF"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_centerInParent="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_sync"/>
+
+                            <TextView
+                                android:textAlignment="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="Synchronisation"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:textColor="#FF4CAF50" />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/acc_params"
+                        android:layout_width="175dp"
+                        android:layout_height="75dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="#D72420"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        android:layout_alignParentRight="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#00FFFFFF"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_centerInParent="true"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                app:srcCompat="@drawable/ic_setting"/>
+
+                            <TextView
+                                android:textAlignment="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:textColor="#FF5722"
+                                android:text="Paramètres"
+                                />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center|center_vertical">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/acc_dsc"
-                android:layout_width="175dp"
-                android:layout_height="75dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="10dp"
-                android:background="#00FFFFFF"
-                app:cardBackgroundColor="#00FFFFFF"
-                android:layout_alignParentRight="true">
 
                 <LinearLayout
+                    android:layout_marginTop="25dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center|center_vertical">
 
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_exit"/>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/acc_dsc"
+                        android:layout_width="175dp"
+                        android:layout_height="75dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="10dp"
+                        android:background="#00FFFFFF"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        android:layout_alignParentRight="true">
 
-                    <TextView
-                        android:textAlignment="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="Déconnection"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:textColor="#FF9C27B0" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#00FFFFFF"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_centerInParent="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_exit"/>
+
+                            <TextView
+                                android:textAlignment="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="Déconnection"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:textColor="#FF9C27B0" />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
 
-        </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>-->
+    </FrameLayout>
 
-    </LinearLayout>
 
-</FrameLayout>
