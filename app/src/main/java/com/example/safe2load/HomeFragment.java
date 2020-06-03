@@ -1,6 +1,8 @@
 package com.example.safe2load;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,8 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import database.helper.dao.users_dao;
 
 public class HomeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -70,7 +74,7 @@ public class HomeFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             try {
                 fragmentManager.beginTransaction().replace(R.id.layout_content, OperationFragment.class.newInstance()).commit();
-                getActivity().setTitle("Opération");
+                getActivity().setTitle("Opérations");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
@@ -82,7 +86,7 @@ public class HomeFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             try {
                 fragmentManager.beginTransaction().replace(R.id.layout_content,ParamsFragment.class.newInstance()).commit();
-                getActivity().setTitle("Paramètres");
+                getActivity().setTitle("Paramétrages");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
@@ -115,7 +119,16 @@ public class HomeFragment extends Fragment {
         });
 
         btn_acc_dsc.setOnClickListener(v -> {
-
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext()) ;
+            alertDialog.setMessage("Êtes-vous sûr de vouloir se déconnecter ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Oui", (dialog, which) -> {
+                        Intent i = new Intent(getContext(), MainActivity.class) ;
+                        users_dao users_dao = new users_dao(getContext()) ;
+                        users_dao.disconnect();
+                        startActivity(i); ;
+                    })
+                    .setNegativeButton("Non", (dialog, which) -> dialog.cancel()).create().show();
 
         });
     }
